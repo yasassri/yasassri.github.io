@@ -60,7 +60,8 @@ Inorder to build the custom image follow the steps below.
 1.  Clone the repo [https://github.com/yasassri/unittest-build-demo](https://github.com/yasassri/unittest-build-demo/tree/main/resources/docker)
 2.  Navigate to [resources/docker](https://github.com/yasassri/unittest-build-demo/tree/main/resources/docker) and execute the following command.
 
-docker build -t <IMAGE\_TAG\_NAME> .
+
+docker build -t <IMAGE_TAG_NAME> .
 
 I have already built the image and pushed it into the public docker registry. Hence you can use the image ycrnet/wso2mi-1.2.0-unittest:1.0.0 image as well.
 

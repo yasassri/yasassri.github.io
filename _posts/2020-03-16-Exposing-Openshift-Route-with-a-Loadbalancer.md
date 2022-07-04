@@ -73,7 +73,7 @@ This is the more complex approach where you will terminate the connection at the
 
 ![](/assets/img/medium/0__oIiVQ0eH9__2TBtnh.jpg)
 
-Following is the NginX configuration that you can use to achieve this. Please note the important properties like **proxy\_ssl\_name, proxy\_ssl\_server\_name** which are used to set new SNI information for the connection.
+Following is the NginX configuration that you can use to achieve this. Please note the important properties like **proxy_ssl_name, proxy_ssl_server_name** which are used to set new SNI information for the connection.
 
 ```
 server {

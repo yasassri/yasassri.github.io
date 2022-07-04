@@ -63,6 +63,6 @@ def persistInfo(){
 }
 ```
 
-What the above will do is read the existing environment variables and add a new environment variable called UPDATED\_DOCKER\_IMAGES. This property can be read from the next build.
+What the above will do is read the existing environment variables and add a new environment variable called UPDATED_DOCKER_IMAGES. This property can be read from the next build.
 
 Hope this helps someone in need. Please drop a comment if you have any queries.

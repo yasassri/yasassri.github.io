@@ -20,33 +20,33 @@ Access logs for requests coming into the Servlet transport is handled by the log
 
 For generating access logs for requests coming into Passthrough transport (which are mostly API/Service invocations) WSO2 uses a separate implementation where most of the code is taken from the Tomcats logging feature it-self, but the attribute set it supports differ from tomcats’. Following is how you can customize API invocation logs of the APIM nodes.
 
-1.  First lets create access log config file. By default this file is not available in API Manager. So lets create a file named **access-log.properties** in _<PRODUCT\_HOME>/repository/conf_
+1.  First lets create access log config file. By default this file is not available in API Manager. So lets create a file named **access-log.properties** in _<PRODUCT_HOME>/repository/conf_
 2.  Add the following content to this file. (All the supported options are in the following file, uncomment them to enable as required)
 
 \# Default access log pattern  
-#access\_log\_pattern=%{X-Forwarded-For}i %h %l %u %t \\"%r\\" %s %b \\"%{Referer}i\\" \\"%{User-Agent}i\\"
+#access_log_pattern=%{X-Forwarded-For}i %h %l %u %t \\"%r\\" %s %b \\"%{Referer}i\\" \\"%{User-Agent}i\\"
 
 \# combinded log pattern  
-#access\_log\_pattern=%h %l %u %t \\"%r\\" %s %b \\"%{Referer}i\\" \\"%{User-Agent}i\\"
+#access_log_pattern=%h %l %u %t \\"%r\\" %s %b \\"%{Referer}i\\" \\"%{User-Agent}i\\"
 
-access\_log\_pattern=time=%t remoteHostname=%h localPort=%p localIP=%A requestMethod=%m requestURL=%U remoteIP=%a requestProtocol=%H HTTPStatusCode=%s queryString=%q  
+access_log_pattern=time=%t remoteHostname=%h localPort=%p localIP=%A requestMethod=%m requestURL=%U remoteIP=%a requestProtocol=%H HTTPStatusCode=%s queryString=%q  
 \# common log pattern  
-#access\_log\_pattern=%h %l %u %t \\"%r\\" %s %b
+#access_log_pattern=%h %l %u %t \\"%r\\" %s %b
 
 \# file prefix  
-access\_log\_prefix=http\_gw
+access_log_prefix=http_gw
 
 \# file suffix  
-access\_log\_suffix=.log
+access_log_suffix=.log
 
 \# file date format  
-access\_log\_file\_date\_format=yyyy-MM-dd
+access_log_file_date_format=yyyy-MM-dd
 
-#access\_log\_directory="/logs"
+#access_log_directory="/logs"
 
 3. Now restart the server and invoke an API.
 
-A new file will be created in the specified logging directory with the specified prefix. By default it will be created in _<SERVER\_HOME>/repository/logs_ directory. Also note that this file support rolling file appending.
+A new file will be created in the specified logging directory with the specified prefix. By default it will be created in _<SERVER_HOME>/repository/logs_ directory. Also note that this file support rolling file appending.
 
 Following are the attributes that are supported and these can be used in your login pattern to get request response information.
 

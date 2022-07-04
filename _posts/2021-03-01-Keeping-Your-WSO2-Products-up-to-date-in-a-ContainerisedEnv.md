@@ -83,38 +83,43 @@ Update details of a specific update will be shown as below,
 
 The Pipeline can simply use a DockerFile to pull the WSO2 Base image, pack necessary dependencies and push the image to the internal registry. Following is a reference Docker file that can be used to build the image.
 
+```docker
 FROM docker.wso2.com/wso2mi:1.2.0.0-alpine  
    
 LABEL image="Private Base Image"  
    
-\# Copy resources if needed, Keystores etc.  
-#COPY resources/custom.jks /home/wso2carbon/wso2mi-1.2.0/  
+# Copy resources if needed, Keystores etc.  
+COPY resources/custom.jks /home/wso2carbon/wso2mi-1.2.0/  
    
-\# Add Remote resources if needed, common drivers etc.  
-\# ADD http://source.file/url  /destination/path
+# Add Remote resources if needed, common drivers etc.  
+ADD http://source.file/url  /destination/path
+```
 
 Inorder to extract Docker metadata and to build the base image following script can be used. (Following was extracted from a Bamboo pipeline hence note the environment variables that are being used.)
 
+```sh
 docker pull ${bamboo.wso2DockerRegistry}:${bamboo.wso2DockerImage};  
-       updateLevel=$(docker inspect -f "{{json .Config.Labels.update\_level }}" ${bamboo.wso2DockerRegistry}:${bamboo.wso2DockerImage} | tr -d \\")  
+
+updateLevel=$(docker inspect -f "{{json .Config.Labels.update_level }}" ${bamboo.wso2DockerRegistry}:${bamboo.wso2DockerImage} | tr -d \\")  
    
-       if \[ -z "$updateLevel" \]; then  
-           echo "ERROR: The Update level was not found in the Image. Aboarting the process!!"  
-           exit 1  
-       else  
-           echo "The Update level is set as $updateLevel"   
-       fi  
-   
-       cd resources/docker  
-       docker build -t ${bamboo.privateRegistry}/${bamboo.privateWSO2ImageName}:$updateLevel.${bamboo.buildNumber} .  
-   
-       docker login ${bamboo.privateRegistry} -u ${bamboo.privateRegistryUserName} -p ${bamboo.privateRegistryPassword}  
-       docker push ${bamboo.privateRegistry}/${bamboo.privateWSO2ImageName}:$updateLevel.${bamboo.buildNumber}  
-        
-       echo "Image ${bamboo.privateRegistry}/${bamboo.privateWSO2ImageName}:$updateLevel.${bamboo.buildNumber} pushed Successfully!"
+if \[ -z "$updateLevel" \]; then  
+    echo "ERROR: The Update level was not found in the Image. Aboarting the process!!"  
+    exit 1  
+else  
+    echo "The Update level is set as $updateLevel"   
+fi  
+
+cd resources/docker  
+docker build -t ${bamboo.privateRegistry}/${bamboo.privateWSO2ImageName}:$updateLevel.${bamboo.buildNumber} .  
+
+docker login ${bamboo.privateRegistry} -u ${bamboo.privateRegistryUserName} -p ${bamboo.privateRegistryPassword}  
+docker push ${bamboo.privateRegistry}/${bamboo.privateWSO2ImageName}:$updateLevel.${bamboo.buildNumber}  
+
+echo "Image ${bamboo.privateRegistry}/${bamboo.privateWSO2ImageName}:$updateLevel.${bamboo.buildNumber} pushed Successfully!"
+```
 
 The full Bamboo pipeline for the above can be found at [yasassri/wso2-baseimage-update-bamboo: Bamboo Spec repository to pull WSO2 updated Base images. (github.com)](https://github.com/yasassri/wso2-baseimage-update-bamboo)
 
 References:
 
-1.  [https://updates.docs.wso2.com/en/latest/](https://updates.docs.wso2.com/en/latest/)
+1. [https://updates.docs.wso2.com/en/latest/](https://updates.docs.wso2.com/en/latest/)

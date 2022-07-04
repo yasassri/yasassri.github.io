@@ -32,27 +32,27 @@ First make sure you have enabled Windows authentication in your MSSQL Server. Af
 
 Download the MSSQL driver. You can download the relevant driver from [https://www.microsoft.com/en-us/download](https://www.microsoft.com/en-us/download)
 
-In my case I will be using the following driver version. [https://download.microsoft.com/download/4/c/3/4c31fbc1-62cc-4a0b-932a-b38ca31cd410/sqljdbc\_9.2.1.0\_enu.zip](https://download.microsoft.com/download/4/c/3/4c31fbc1-62cc-4a0b-932a-b38ca31cd410/sqljdbc_9.2.1.0_enu.zip)
+In my case I will be using the following driver version. [https://download.microsoft.com/download/4/c/3/4c31fbc1-62cc-4a0b-932a-b38ca31cd410/sqljdbc_9.2.1.0_enu.zip](https://download.microsoft.com/download/4/c/3/4c31fbc1-62cc-4a0b-932a-b38ca31cd410/sqljdbc_9.2.1.0_enu.zip)
 
 **Step 02**
 
-Then unzip this driver archive. The content will look like something similar to below. From here on I will refer this directory as <DRIVER\_DIR>
+Then unzip this driver archive. The content will look like something similar to below. From here on I will refer this directory as <DRIVER_DIR>
 
 ![](/assets/img/medium/1__FkQaV286HdeodQnuiY5cYw.png)
 
 **Step 03**
 
-Now copy the mssql driver jar from the unziped directory to _APIM\_HOME/repository/components/lib_ directory. Make sure you select the correct driver which matches the Java runtime version you have in the VM.
+Now copy the mssql driver jar from the unziped directory to _APIM_HOME/repository/components/lib_ directory. Make sure you select the correct driver which matches the Java runtime version you have in the VM.
 
 **Step 04**
 
-Next in the <DRIVER\_DIR> navigate to <DRIVER\_DIR>/_auth/<Architecture>/_ where you will see a dll file. This dll will be used by the driver to initiate the authentication. Copy the path to this .dll. (<PATH\_TO\_DLL>)
+Next in the <DRIVER_DIR> navigate to <DRIVER_DIR>/_auth/<Architecture>/_ where you will see a dll file. This dll will be used by the driver to initiate the authentication. Copy the path to this .dll. (<PATH_TO_DLL>)
 
 ![](/assets/img/medium/1__Tu1g__NOci__oGPJuQ1ZYWag.png)
 
 **Step 05**
 
-Now we need to configure the path so that JDBC driver can find the above dll file. Inorder to do that open <APIM\_HOME>/bin/wso2server.bat and add the following line as shown below.
+Now we need to configure the path so that JDBC driver can find the above dll file. Inorder to do that open <APIM_HOME>/bin/wso2server.bat and add the following line as shown below.
 
 After adding the following line the batch file will look something similar to below.
 
@@ -60,7 +60,7 @@ After adding the following line the batch file will look something similar to be
 
 **Step 05**
 
-Now in the <APIM\_HOME>/repository/conf/deployment.toml change the datasource configurations as shown below. Note the additional connection parameter **integratedSecurity=true.** Also add some dummy value as the username and keep the password empty.
+Now in the <APIM_HOME>/repository/conf/deployment.toml change the datasource configurations as shown below. Note the additional connection parameter **integratedSecurity=true.** Also add some dummy value as the username and keep the password empty.
 
 **Step 06**
 
