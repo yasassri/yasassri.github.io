@@ -4,13 +4,14 @@ description: >-
   In any enterprise application it is important that we properly manage access
   logs which can be analyzed realtime or at a later stage. When…
 date: '2018-06-01T09:38:30.045Z'
-categories: [wso2, wso2apim, tomcat, devops]
-keywords: [wso2]
-# slug: /@ycrnet/customize-and-manage-wso2-api-manager-access-logs-e855989f9e0f
+categories: [WSO2, API Manager]
+tags: [wso2, wso2apim, tomcat, devops]
+image:
+  path: /assets/img/medium/0__cKJyAeTNvjRojkfC.jpg
+  width: 800
+  height: 500
+  alt: 
 ---
-
-![](/assets/img/medium/0__cKJyAeTNvjRojkfC.jpg)
-
 In any enterprise application it is important that we properly manage access logs which can be analyzed realtime or at a later stage. When it comes to WSO2 products they do provide access-login capabilities out of the box. But in some cases if you are using a tool to analyze the logs (e.g: splunk etc.) you will need the logs in a custom format. For example as key-value pares. So this POST explained how you can customize default logging pattern of WSO2 access logs.
 
 In WSO2 products like WSO2 ESB, EI, APIM there are two types of access, admin operation access and API/Service invocations. If you are familiar with WSO2 products it contains 2 sets of ports, 1 for Servlets Transport (9443/9763) and one for Passthrough (8280/8243). Servlet transport is where you get admin operation requests. By default all the access logs, coming into both servlet transport and passthrough transport are written to a common access log file located in _repository/logs_ directory. But this default behavior can be changed and you can configure the logs to be written into two different files.
@@ -23,14 +24,14 @@ For generating access logs for requests coming into Passthrough transport (which
 2.  Add the following content to this file. (All the supported options are in the following file, uncomment them to enable as required)
 
 \# Default access log pattern  
-#access\_log\_pattern=%{X-Forwarded-For}i %h %l %u %t \\”%r\\” %s %b \\”%{Referer}i\\” \\”%{User-Agent}i\\”
+#access\_log\_pattern=%{X-Forwarded-For}i %h %l %u %t \\"%r\\" %s %b \\"%{Referer}i\\" \\"%{User-Agent}i\\"
 
 \# combinded log pattern  
-#access\_log\_pattern=%h %l %u %t \\”%r\\” %s %b \\”%{Referer}i\\” \\”%{User-Agent}i\\”
+#access\_log\_pattern=%h %l %u %t \\"%r\\" %s %b \\"%{Referer}i\\" \\"%{User-Agent}i\\"
 
 access\_log\_pattern=time=%t remoteHostname=%h localPort=%p localIP=%A requestMethod=%m requestURL=%U remoteIP=%a requestProtocol=%H HTTPStatusCode=%s queryString=%q  
 \# common log pattern  
-#access\_log\_pattern=%h %l %u %t \\”%r\\” %s %b
+#access\_log\_pattern=%h %l %u %t \\"%r\\" %s %b
 
 \# file prefix  
 access\_log\_prefix=http\_gw
@@ -41,7 +42,7 @@ access\_log\_suffix=.log
 \# file date format  
 access\_log\_file\_date\_format=yyyy-MM-dd
 
-#access\_log\_directory=”/logs”
+#access\_log\_directory="/logs"
 
 3\. Now restart the server and invoke an API.
 

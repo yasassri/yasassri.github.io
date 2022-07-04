@@ -4,13 +4,15 @@ description: >-
   In this post I’ll explain how we can restrict access to WSO2 Carbon console
   for specific client machines. In WSO2 servers they have an…
 date: '2019-06-29T06:23:28.794Z'
-categories: []
+categories: [WSO2, Generic]
 keywords: []
-slug: /@ycrnet/restricting-access-to-wso2-servers-a6b063251a3c
+tags: [wso2, wso2am, wso2ei]
+image:
+  path: /assets/img/medium/0__1VoHbE5NJchauQxn.jpg
+  width: 800
+  height: 500
+  alt: 
 ---
-
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__1VoHbE5NJchauQxn.jpg)
-
 In this post I’ll explain how we can restrict access to WSO2 Carbon console for specific client machines. In WSO2 servers they have an embedded tomcat instance to host the web-apps including the server. So here we will be using tomcat valves to restrict access to the server. I’ll be covering few different scenarios where you will have to use different configurations and valves.
 
 #### White List a IP When Accessing the Server Directly
@@ -20,8 +22,9 @@ Take a scenario where the WSO2 server is accessed directly without a load balanc
 In-order to do this we need to use tomcats’ RemoteAddrValve. Follow the steps below to add the valve.
 
 1.  Open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the valve configurations as below,
-
+```
 <Valve className=”org.apache.catalina.valves.RemoteAddrValve” allow=”10\\.100\\.5\\.112"/>
+```
 
 2\. Then restart the server for changes to be effective.
 
@@ -33,6 +36,7 @@ In this case we are validating whether the requests are generated for a specific
 
 1.  Open To do that open “_<IS\_HOME>/repository/conf/tomcat/catalina-server.xml”_ and enable _enableLookups_ property. Full connector configurations will look like following.
 
+```xml
 <Connector protocol=”org.apache.coyote.http11.Http11NioProtocol”  
  port=”9443"  
  bindOnInit=”false”  
@@ -59,9 +63,11 @@ In this case we are validating whether the requests are generated for a specific
 keystoreFile=”${carbon.home}/repository/resources/security/wso2carbon.jks”  
 keystorePass=”wso2carbon”  
 URIEncoding=”UTF-8"/>
+```
 
 2\. Next open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the following valve configuration,
 
+```xml
 <Valve className=”org.apache.catalina.valves.RemoteHostValve” allow=”wso2\\.mydomain\\.com"/>
 
 3\. Then restart the server for changes to get effective.
@@ -72,7 +78,7 @@ Now if you try to access the WSO2 server with [https://wso2.mydomain.com](https:
 
 When you are accessing WSO2 servers through a LB the connections will be made as follows.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__BelbP0aQ4Q11unRMDpjTeA.png)
+![](/assets/img/medium/1__BelbP0aQ4Q11unRMDpjTeA.png)
 
 The client will create a connection with the LB(Load balancer) and the LB will be creating a connection with the backend server. So for the LB the client will be 10.100.5.112 and for the WSO2 server the client will be the LB. So WSO2 server will always see the clients IP as 192.168.112.8 irrespective from which client machine the request is generating from. So in-order to get the clients IP we need to read the X-Forwarded-For header, when ever a request is parsing through a proxy the clients IP will be appended to the X-Forwarded-For header. So the first IP in the X-Forwarded-For header is the IP of the request originating client.
 

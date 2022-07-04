@@ -4,12 +4,14 @@ description: >-
   Testerina is the built-in test framework for Ballerina. If anyone is wondering
   what is ballerina? Ballerina is a general purpose…
 date: '2018-06-04T09:09:31.568Z'
-categories: [Ballerina]
-keywords: []
+categories: [WSO2, Ballerina]
+tags: [ballerina, wso2]
+image:
+  path: /assets/img/medium/0__q9dEl9CqTReyVSVp.jpg
+  width: 800
+  height: 500
+  alt: 
 ---
-
-![](/assets/img/medium/0__q9dEl9CqTReyVSVp.jpg)
-
 Testerina is the built-in test framework for Ballerina. If anyone is wondering what is ballerina? Ballerina is a general purpose, concurrent, strongly typed and cloud native programming language which focuses on integrating and orchestrating microservices etc. If you want to learn more about ballerina you should read the rich content available at [ballerina.io](https://ballerina.io/)
 
 This post will explain the mocking capabilities testerina provides, which allows you to write independent self-contained tests for your application.

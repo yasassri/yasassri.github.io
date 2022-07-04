@@ -2,10 +2,14 @@
 title: Perfect Your Ballerina Act — With Testerina
 description: 'Designing a Testable Application'
 date: '2018-05-01T04:24:02.933Z'
-categories: [ballerina, wso2]
-keywords: [ballerina, wso2]
+categories: [WSO2, Ballerina]
+tags: [ballerina, wso2]
+image:
+  path: /assets/img/posts/ballerina.jpg
+  width: 800
+  height: 500
+  alt: 
 ---
-
 ### Designing a Testable Application
 
 This post is not about dancing!! Rather it’s about developing a microservice based **testable** end-to-end application with Ballerina and making sure it runs perfectly without any glitches using Testerina.

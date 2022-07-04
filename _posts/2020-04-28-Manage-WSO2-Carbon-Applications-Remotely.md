@@ -6,10 +6,15 @@ description: >-
 date: '2020-04-28T04:12:19.205Z'
 categories: []
 keywords: []
-slug: /@ycrnet/manage-wso2-carbon-applications-remotely-d963e1f8465c
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt: Amazon AWS
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__8O9s0QCFdnDabr__M.jpg)
+![](/assets/img/medium/0__8O9s0QCFdnDabr__M.jpg)
 
 In this post I’ll introduce you to a Java CLI client that I happened to write to manage WSO2 Carbon Applications. WSO2 Enterprise Integrator (was known as WSO2 ESB) has a mechanism to develop integration flows externally using Integration Studio and deploy them using .car files. This allows you to change environment specific variables and then deploy the same carbon application (Capp) between multiple environments.
 
@@ -21,7 +26,7 @@ When we are dealing with Capps we have very limited options to manage the Capps 
 
 This is a very simple client which utilizes WSO2 Admin Services to manage Carbon Applications that are deployed. The very high level architecture is something like below,
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__JdmtoHy5p16DSpm9.jpg)
+![](/assets/img/medium/0__JdmtoHy5p16DSpm9.jpg)
 
 #### Building the Client.
 
@@ -34,7 +39,7 @@ The source for this client resides at [https://github.com/yasassri/wso2-capp-man
 
 3\. This will create an executable uber Jar in the target directory. Refer the following screenshot.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__kY7tBfAl2foTpnQb.jpg)
+![](/assets/img/medium/0__kY7tBfAl2foTpnQb.jpg)
 
 #### Importing certificates to access remote servers.
 
@@ -87,8 +92,8 @@ _java -jar capp-manager-1.0.0.jar deploy — server_ [_https://localhost:9443_](
 
 Output
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0____clu4KGHpxnuQjAm.jpg)
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__acxB8lRozmF4zJNr.jpg)
+![](/assets/img/medium/0____clu4KGHpxnuQjAm.jpg)
+![](/assets/img/medium/0__acxB8lRozmF4zJNr.jpg)
 
 If the app you are trying to deploy already exist it will throw the following error.
 
@@ -98,7 +103,7 @@ Also you can use the — force option which will undeploy an existing carbon
 
 java -jar capp-manager-1.0.0.jar deploy — server [https://localhost:9443](https://localhost:9443) — trustore-location ./client-truststore.jks — trustore-password wso2carbon — username admin — password admin — file ./cicd-demo-capp\_1.0.1-SNAPSHOT.car — force
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__kJuXoF9GgkZ64vOO.jpg)
+![](/assets/img/medium/0__kJuXoF9GgkZ64vOO.jpg)
 
 ### Undeploy CApp
 
@@ -108,7 +113,7 @@ _java -jar capp-manager-1.0.0.jar undeploy — server_ [_https://localhost:9443_
 
 Output
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__wDGolhx3L7vj7SQi.jpg)
+![](/assets/img/medium/0__wDGolhx3L7vj7SQi.jpg)
 
 ### List Apps
 
@@ -118,7 +123,7 @@ _java -jar capp-manager-1.0.0.jar list-apps — server_ [_https://localhost:9443
 
 Output
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__5tf__jJOXR707PdaW.jpg)
+![](/assets/img/medium/0__5tf__jJOXR707PdaW.jpg)
 
 If you want to get a processable output you can only read the standard out. In this case you can direct the standard error to a different stream.
 
@@ -126,7 +131,7 @@ _java -jar capp-manager-1.0.0.jar list-apps — server_ [_https://localhost:9443
 
 Output
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__x0WvF1D__jp8vq5mY.jpg)
+![](/assets/img/medium/0__x0WvF1D__jp8vq5mY.jpg)
 
 ### Download CApp
 
@@ -136,7 +141,7 @@ _java -jar capp-manager-1.0.0.jar download — server_ [_https://localhost:9443_
 
 Output
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__qt1cQQm0o2HaulLC.jpg)
+![](/assets/img/medium/0__qt1cQQm0o2HaulLC.jpg)
 
 ### Understanding the output streams
 

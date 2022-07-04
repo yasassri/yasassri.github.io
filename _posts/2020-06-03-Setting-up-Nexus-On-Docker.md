@@ -6,14 +6,19 @@ description: >-
 date: '2020-06-03T06:27:56.105Z'
 categories: []
 keywords: []
-slug: /@ycrnet/setting-up-nexus-on-docker-5bd0221cd2a5
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt: Amazon AWS
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__29xyWBC4uCA5y0Sl.jpg)
+![](/assets/img/medium/0__29xyWBC4uCA5y0Sl.jpg)
 
 In this post, I will be explaining how to set up a nexus repository with docker.
 
-Nexus is an artifact repository which manages software “artifacts” required for the development. If you develop software, your builds can download dependencies from Nexus and can publish artifacts to Nexus creating a way to share artifacts within an organization.
+Nexus is an artifact repository which manages software “artifacts" required for the development. If you develop software, your builds can download dependencies from Nexus and can publish artifacts to Nexus creating a way to share artifacts within an organization.
 
 **Prerequisites:** Docker should be installed in your machine and the machine should have an active internet connection.
 
@@ -38,7 +43,7 @@ Then check whether the container is running
 
 sudo docker ps
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__V5jiKKUFwVtQliw6.jpg)
+![](/assets/img/medium/0__V5jiKKUFwVtQliw6.jpg)
 
 Now copy the container ID from the output of the above command.
 
@@ -48,7 +53,7 @@ sudo docker logs -f <CONTAINER ID>
 or  
 sudo docker logs -f nexus
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__HlktfoGQNqPfjV9i.jpg)
+![](/assets/img/medium/0__HlktfoGQNqPfjV9i.jpg)
 
 If you see the above logs that means the nexus server started successfully.
 
@@ -62,10 +67,10 @@ After grabbing the password from this file navigate to the following URL.
 
 And click on login and enter admin as the username and add the password you just grabbed earlier.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__43ioy__7L2uyIqndR.jpg)
+![](/assets/img/medium/0__43ioy__7L2uyIqndR.jpg)
 
 Then you will be asked to complete a Wizard which will let you change the password and set a few additional configurations. And finally you should be able to see your repositories.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__IkapqliVmgd1y7ID.jpg)
+![](/assets/img/medium/0__IkapqliVmgd1y7ID.jpg)
 
 Now we have a running Nexus repository set with docker. Please drop a message if you have any questions.

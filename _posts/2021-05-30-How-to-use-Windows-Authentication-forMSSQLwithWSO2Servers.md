@@ -6,11 +6,15 @@ description: >-
 date: '2021-05-30T05:33:03.899Z'
 categories: []
 keywords: []
-slug: >-
-  /@ycrnet/how-to-use-windows-authentication-for-mssql-with-wso2-servers-ac8f4c85a0ff
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt:
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__Mg4MOvswocDYJfUE.jpg)
+![](/assets/img/medium/0__Mg4MOvswocDYJfUE.jpg)
 
 Every WSO2 product require a DB to persist different data. If we take WSO2 API Manager there are multiple DBs used to store different sets of data, for example, APIM DB, Registry DB, User DB etc. By default these databases are pointed to a H2 Database which resides in the file system. For production deployments these databases should be externalised by pointing it to a production grade Databases like MSSQL, MYSQL, Oracle etc.
 
@@ -37,7 +41,7 @@ In my case I will be using the following driver version. [https://download.micro
 
 Then unzip this driver archive. The content will look like something similar to below. From here on I will refer this directory as <DRIVER\_DIR>
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__FkQaV286HdeodQnuiY5cYw.png)
+![](/assets/img/medium/1__FkQaV286HdeodQnuiY5cYw.png)
 
 **Step 03**
 
@@ -47,7 +51,7 @@ Now copy the mssql driver jar from the unziped directory to _APIM\_HOME/reposito
 
 Next in the <DRIVER\_DIR> navigate to <DRIVER\_DIR>/_auth/<Architecture>/_ where you will see a dll file. This dll will be used by the driver to initiate the authentication. Copy the path to this .dll. (<PATH\_TO\_DLL>)
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__Tu1g__NOci__oGPJuQ1ZYWag.png)
+![](/assets/img/medium/1__Tu1g__NOci__oGPJuQ1ZYWag.png)
 
 **Step 05**
 
@@ -55,7 +59,7 @@ Now we need to configure the path so that JDBC driver can find the above dll fil
 
 After adding the following line the batch file will look something similar to below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__cCWY__IJsROrEBMEIl3zgSA.png)
+![](/assets/img/medium/1__cCWY__IJsROrEBMEIl3zgSA.png)
 
 **Step 05**
 

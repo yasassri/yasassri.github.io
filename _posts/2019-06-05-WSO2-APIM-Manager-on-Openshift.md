@@ -4,13 +4,14 @@ description: >-
   In this post I will be explaining how WSO2 products can be deployed on top of
   Openshift. By the time I was writing this blog I was using…
 date: '2019-06-05T04:27:05.694Z'
-categories: []
-keywords: []
-slug: /@ycrnet/wso2-apim-manager-on-openshift-ab4841faa1db
+categories: [WSO2, API Manager]
+tags: [wso2, devops, openshift, k8s]
+image:
+  path: /assets/img/medium/1__vhZV2kNvYHsY6yVYZ9MRGw.jpeg
+  width: 800
+  height: 500
+  alt: 
 ---
-
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__vhZV2kNvYHsY6yVYZ9MRGw.jpeg)
-
 In this post I will be explaining how WSO2 products can be deployed on top of Openshift. By the time I was writing this blog I was using **Openshift 3.11** and this deployment is hardcoded for **MSSQL.**
 
 Openshift is the commercial Kubernetes offering that is provided by RedHat. Although the underline runtime is Kubernetes there are few differences when it comes to Openshift from Kubernetes. Mainly traffic routing, scaling/rollbacks and deployments are different in Openshift. Feature wise the main deferences are,
@@ -33,7 +34,7 @@ The related artifacts are located in [https://github.com/yasassri/openshift-wso2
 
 There are several directories in the <Artifact\_Home>. Mainly docker, k8s, scripts, and resources. You can see the repository structure in the below image.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__9UTyqNAlrlnsbvOOj9Fyhg.png)
+![](/assets/img/medium/1__9UTyqNAlrlnsbvOOj9Fyhg.png)
 
 In the following section what each directory contains will be explained.
 
@@ -41,11 +42,11 @@ In the following section what each directory contains will be explained.
 
 Docker directory contains the docker artifacts to create docker images that are required by the openshift environment. If we look closely at the docker folder, it has the following content.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__x2RPhCYw8__vt32tFbgkgxQ.png)
+![](/assets/img/medium/1__x2RPhCYw8__vt32tFbgkgxQ.png)
 
 Each product/profile has its own docker resources to create the necessary docker images. So if we consider a single directory which represents a single product it has the following folder structure.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__k__ch7lB7v2Ygj34qJNfbzg.png)
+![](/assets/img/medium/1__k__ch7lB7v2Ygj34qJNfbzg.png)
 
 Files directory contains the necessary external artifacts that the Docker build process requires, for example, any external dependencies (SQL drivers) that the wso2 servers require should be added to the lib directory. The init.sh script is the entry point of the created docker container. So if you want to perform a task on docker container startup you should add this to the init.sh script. More details on docker image creation will be in a different section of this document.
 
@@ -53,33 +54,33 @@ Files directory contains the necessary external artifacts that the Docker build 
 
 Then we have the k8s directory. Which contains all the artifacts that are required to setup WSO2 servers on top of openshift. If we look closely it has the following folder structure.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1____8tMSEaTnfhd0uSF88JimQ.png)
+![](/assets/img/medium/1____8tMSEaTnfhd0uSF88JimQ.png)
 
 This structure is different from the docker structure since the grouping is done based on deployment patterns and a deployment contains multiple products and should be started in a specific order to make sure the deployment starts without errors and it is successful, so the products/profiles are grouped in a logical manner. If we take the apim-is directory it contains, WSO2 API Manager, Identity Server, API Manager Analytics worker and IS Analytics worker related artifacts. The folder structure would look like following,
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__uyo7s__rg0MhvMObYeH____Ow.png)
+![](/assets/img/medium/1__uyo7s__rg0MhvMObYeH____Ow.png)
 
 Each directory named as the product will have K8S artifacts for that product. Typically it will have a K8S deployment yaml, a service yaml and in some cases a volume claim. As an example refer the following,
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__FCpOkdBPw32TO1Lr.jpg)
+![](/assets/img/medium/0__FCpOkdBPw32TO1Lr.jpg)
 
 Then for the configurations maps, we use the confs directory which will contain the configuration files that are needed for the config maps. For each product it will have a directory in the configs folder.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__hM4l74mw1oGxWaD8.jpg)
+![](/assets/img/medium/0__hM4l74mw1oGxWaD8.jpg)
 
 The above configurations will be mounted to the container on startup to alter the default configurations of WSO2 products. Only the configuration files that needs alterations are included here. These will be mounted as secrets or config maps depending on the requirement. The configurations doesn’t have all the values hardcoded, most configuration files will have place holders in them and these will be populated when deploying. For example if we take the _carbon.xml_ the hostname of the server will be populated when deploying. So the configuration file will have a placeholder like below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__tIyXpTZTkni6LR1__.jpg)
+![](/assets/img/medium/0__tIyXpTZTkni6LR1__.jpg)
 
 More information on these placeholders and how they get replaced will be provided in the later section of the document.
 
 Then in the folder structure we have a routes directory which will contain the openshift route configurations. Following are the routes of the apim-is deployment.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__1xE21lWdWQ9zeu64.jpg)
+![](/assets/img/medium/0__1xE21lWdWQ9zeu64.jpg)
 
 Then within the K8S folder we have a directory called rbac and volumes.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__d7cPnDw4PsejJWZRm__wEug.png)
+![](/assets/img/medium/1__d7cPnDw4PsejJWZRm__wEug.png)
 
 Rbac directory has the access control configurations that are required by the cluster user to get clustering information. The volumes has the configurations to create persistent volumes.
 
@@ -87,11 +88,11 @@ Rbac directory has the access control configurations that are required by the cl
 
 The **_resources_** directory holds the Db scripts and other relevant resources that are needed for the deployment.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__MFT__XbsG6VfbJ97Xj0zcWw.png)
+![](/assets/img/medium/1__MFT__XbsG6VfbJ97Xj0zcWw.png)
 
 Then we have the scripts directory which contains all the automation scripts to prepare the deployment artifacts and then to deploy WSO2 servers. How to use these scripts will be explained later.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__EL0jTsdsDrb8__YTAuySF5Q.png)
+![](/assets/img/medium/1__EL0jTsdsDrb8__YTAuySF5Q.png)
 
 ### Deploying WSO2 servers
 
@@ -101,7 +102,7 @@ WSO2 servers require DBs to persist the application and user data, so we need cr
 
 In the <REPO\_HOME>/resources/db-setup directory it has the following scripts.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__uifQfZ__xcnuI6trXPt__t6Q.png)
+![](/assets/img/medium/1__uifQfZ__xcnuI6trXPt__t6Q.png)
 
 1.  First inorder to create the necessary databases execute the _1-databases.sql_ script on the MSSQL Server. This will create the necessary DBs.
 2.  Then execute all the scripts within the subfolders to create the necessary tables in the DBs. For _example apim/mssql.sql, common\_um/mssql.sql_. There is no order for the execution, we need to execute all the scripts.
@@ -113,7 +114,7 @@ You can follow the steps in the below section to create a new keystore with a pr
 
 Change the CN name appropriately depending on the environment and execute the following command in the terminal. You can specify any value for the <KEY\_PASS>
 
-keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore wso2carbon.jks -dname “CN=\*.apps.wso2.com, OU=BP,O=WSO2,L=EC,S=WS,C=EC” -storepass <KEY\_PASS> -keypass <KEY\_PASS> -validity 7300
+keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore wso2carbon.jks -dname “CN=\*.apps.wso2.com, OU=BP,O=WSO2,L=EC,S=WS,C=EC" -storepass <KEY\_PASS> -keypass <KEY\_PASS> -validity 7300
 
 Here we are using \*.apps.wso2.com as the CN for the self signed certificate. You need to change this depending on your environment. <KEY\_PASS> is the only value you should be changing. Also note that the storepass and the keypass has to be the same.
 
@@ -156,7 +157,7 @@ After downloading you can list the products with the following command,
 
 > wum list
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__WsTlh0wbxLp237h__.jpg)
+![](/assets/img/medium/0__WsTlh0wbxLp237h__.jpg)
 
 Next you can check whether wum updates are available for a given product. You can execute the following command to check for updates.
 
@@ -164,7 +165,7 @@ Next you can check whether wum updates are available for a given product. You ca
 
 This will give the following output if updates are available.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__5__gerzSygIvSirjN.jpg)
+![](/assets/img/medium/0__5__gerzSygIvSirjN.jpg)
 
 Now you can do an update of the product. To do this execute the following command.
 
@@ -178,7 +179,7 @@ After updating the product the product should be available at a location similar
 
 If you perform multiple updates you will have multiple distributions in this location so make sure you use the distribution with the latest timestamp. Refer the following image.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__E0t0r1vBrkTyqS7S.jpg)
+![](/assets/img/medium/0__E0t0r1vBrkTyqS7S.jpg)
 
 **Preparing Openshift Environment**
 
@@ -236,45 +237,45 @@ Next navigate to the <Artifact\_Home>/scripts directory and open the 0-setEnviro
 
 Following variable name contains the project name/namespace of the WSO2 deployment, this name is specific to openshift and can be set depending on the environment.
 
-export K8S\_NAMESPACE=”wso2”
+export K8S\_NAMESPACE="wso2"
 
 This is the docker registry URL of the Openshift environment, you can ask your openshift admin for this.
 
-export DOCKER\_REGISTRY\_URL=”registry.apps.wso2.com”  
+export DOCKER\_REGISTRY\_URL="registry.apps.wso2.com"  
 export DOCKER\_REGISTRY\_NAMESPACE=$K8S\_NAMESPACE
 
 The name of the directory which contains the keystores that are being used
 
-export KEYSTORE\_DIR\_NAME=”dev-env” # The directory name which contains environment specific keystores in resources/keystores  
-export WSO2\_PACK\_LOCATION=”” # The directory where WSO2 packs reside
+export KEYSTORE\_DIR\_NAME="dev-env" # The directory name which contains environment specific keystores in resources/keystores  
+export WSO2\_PACK\_LOCATION="" # The directory where WSO2 packs reside
 
 Following are the DNS names that are used for different WSO2 servers. Need to change the values depending on the environment.
 
 #DNS Names for the servers  
-export APIM\_HOST\_NAME=”apim.apps.wso2.com”  
-export APIM\_GW\_HOST\_NAME=”gw.apps.wso2.com”  
-export IS\_HOST\_NAME=”identity.apps.wso2.com”
+export APIM\_HOST\_NAME="apim.apps.wso2.com"  
+export APIM\_GW\_HOST\_NAME="gw.apps.wso2.com"  
+export IS\_HOST\_NAME="identity.apps.wso2.com"
 
 Following are the database details of WSO2
 
 #DB Details  
 #For all the DB’s the same user will be used.  
-export DB\_URL=”10.2.1.2:1433" # host:port  
-export DB\_USER=”root”  
-export DB\_USER\_PASSWORD=”root123456"
+export DB\_URL="10.2.1.2:1433" # host:port  
+export DB\_USER="root"  
+export DB\_USER\_PASSWORD="root123456"
 
 WSO2 admin credentials.
 
 #Master admin of the WSO2 server  
-export ADMIN\_USER=”admin”  
-export ADMIN\_USER\_PASSWORD=”bpadmin”  
-export ADMIN\_USER\_PASSWORD\_ENCODED=”YnBhZG1pbg==” # This is the base64 encoded value of the admin password, you can use [https://www.base64encode.org/](https://www.base64encode.org/) to encode.
+export ADMIN\_USER="admin"  
+export ADMIN\_USER\_PASSWORD="bpadmin"  
+export ADMIN\_USER\_PASSWORD\_ENCODED="YnBhZG1pbg==" # This is the base64 encoded value of the admin password, you can use [https://www.base64encode.org/](https://www.base64encode.org/) to encode.
 
 WSO2 keytstore credentials
 
 #Keystore Details  
-export KEYSTORE\_PASSWORD=”wso2carbon”  
-export TRUSTORE\_PASSWORD=”wso2carbon”
+export KEYSTORE\_PASSWORD="wso2carbon"  
+export TRUSTORE\_PASSWORD="wso2carbon"
 
 After properly setting the variables source this file. Execute the following command to do this.
 
@@ -290,7 +291,7 @@ This will create the docker images. To push the docker images to the registry ex
 
 After pushing the docker images you can browse the docker images in the Openshift console. You need to login to the openshift console and you need to have proper permissions to view the created project in Openshft. After login select the project and navigate to Builds -> Images tab and the created images will be shown as below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__fV3MzWTtvJyNiuk7__zFAZg.png)
+![](/assets/img/medium/1__fV3MzWTtvJyNiuk7__zFAZg.png)
 
 #### Deploying APIM
 
@@ -304,28 +305,28 @@ Next we need to execute the apim deployment script. You can execute the followin
 
 The above will create the Openshift artifacts that are related to API Manager and IS. You can check the deployment process by navigating to the Openshift console. The progress of the deployment will be shown in the Openshift console.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__LJVfk57o__m5wLMhtw2cdlQ.png)
+![](/assets/img/medium/1__LJVfk57o__m5wLMhtw2cdlQ.png)
 
 To check the status of the pods you can click on a deployment or you can open the pods page under Applications.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__xFZJclgnabOLkVzS9OWnSw.png)
+![](/assets/img/medium/1__xFZJclgnabOLkVzS9OWnSw.png)
 
 Also from the pod you can check the events that are associated with the pod. This will reveal any errors that are generated in the deployment time.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__Nri9C1NXjR7d7Fda4OPoSA.png)
+![](/assets/img/medium/1__Nri9C1NXjR7d7Fda4OPoSA.png)
 
 Also from the pods you can check the logs of the pods by navigating to the logs tab,
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__xLDg0FPmRKxN9ggOvn8ALQ.png)
+![](/assets/img/medium/1__xLDg0FPmRKxN9ggOvn8ALQ.png)
 
 If you need to access the pod itself you can navigate to the terminal tab and it will open a terminal session to the pod
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__eHt____XG999mMIA__pNBdE__Q.png)
+![](/assets/img/medium/1__eHt____XG999mMIA__pNBdE__Q.png)
 
 #### Accessing the Deployment
 
 Openshift routes handle all inbound traffic that is received by the application. In-order to check the status of routes you can navigate to the routes section. The accessible URLs of the deployment will be shown in routes. You can navigate to a specified route to access the different components of APIM.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__qd6Y87EkoXYxq9UdvR06__Q.png)
+![](/assets/img/medium/1__qd6Y87EkoXYxq9UdvR06__Q.png)
 
 So that’s it hope this helps and please drop a comment if you have any questions.

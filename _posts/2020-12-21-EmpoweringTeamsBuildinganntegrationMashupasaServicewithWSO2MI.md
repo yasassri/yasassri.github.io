@@ -8,13 +8,17 @@ description: >-
 date: '2020-12-21T09:42:10.006Z'
 categories: []
 keywords: []
-slug: >-
-  /@ycrnet/empowering-your-teams-building-an-integration-mashup-as-a-service-with-wso2-mi-660d6a83af87
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt: 
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__BRQZDeO2CpEDqClN.jpg)
+![](/assets/img/medium/0__BRQZDeO2CpEDqClN.jpg)
 
-In medium-scale to large-scale corporations, there are numerous teams/business-units that operate cohesively yet independently to drive the organization towards its’ goals and objectives. These teams typically use different integral systems within their business units, which adds up to many different systems been adopted within the Organization. As the number of different systems grows within an Organization it’s going to be a nightmare to manage these different systems and technologies. On the other hand, it’s going to incur a considerable cost to the Organization. Hence as a proactive measure, it’s ideal for an organization to streamline and standardize the technology stack and the process, where the organization can build a common platform that can be used by the business units while eliminating the maintenance and management overhead. In simple terms, the Organization can develop a centralized SaaS platform where different business units can onboard themselves and start developing their integrations with a few clicks without worrying about the service management aspect. We will call this an “Integration Mashup as a Service(IMaaS)” where the platform will facilitate self-onboarding, service reuse, scalability, resilience, and above all streamline the integrations across the entire organization.
+In medium-scale to large-scale corporations, there are numerous teams/business-units that operate cohesively yet independently to drive the organization towards its’ goals and objectives. These teams typically use different integral systems within their business units, which adds up to many different systems been adopted within the Organization. As the number of different systems grows within an Organization it’s going to be a nightmare to manage these different systems and technologies. On the other hand, it’s going to incur a considerable cost to the Organization. Hence as a proactive measure, it’s ideal for an organization to streamline and standardize the technology stack and the process, where the organization can build a common platform that can be used by the business units while eliminating the maintenance and management overhead. In simple terms, the Organization can develop a centralized SaaS platform where different business units can onboard themselves and start developing their integrations with a few clicks without worrying about the service management aspect. We will call this an “Integration Mashup as a Service(IMaaS)" where the platform will facilitate self-onboarding, service reuse, scalability, resilience, and above all streamline the integrations across the entire organization.
 
 In this post, I will be exploring how WSO2 MI can be leveraged to develop an Integration Mashup as Service, Platform.
 
@@ -74,17 +78,17 @@ This captures the platform's ability to update the services seamlessly and the a
 
 The IMaaS will have multiple tenant spaces and each tenant space can run multiple services within the same space. This can be depicted as shown in the following diagram.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__IGl3r9fMDVOb__u__b69wpBg.png)
+![](/assets/img/medium/1__IGl3r9fMDVOb__u__b69wpBg.png)
 
 Honoring the key principles that were discussed in the previous section the platform can be designed to support the following capabilities. Hence a single tenant space will look something like below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__XuZq5FrOpCPXOY1__YiHhJQ.png)
+![](/assets/img/medium/1__XuZq5FrOpCPXOY1__YiHhJQ.png)
 
 As shown in the above diagram, the services would run in a dedicated space and they can run as a single service or as clusters. At the same time, they can interact with other services. Overall the platform should support Log aggregation, message training, service matrics, service scaling, failover/rolling updates, and CICD.
 
 Taking a step back and giving the platform a high-level look, at a very high-level the platform will look like something similar to the below diagram.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__mzVZXRypAB9isAVag1Lr3w.png)
+![](/assets/img/medium/1__mzVZXRypAB9isAVag1Lr3w.png)
 
 As shown in the above image each tenant space should be isolated and each tenant space will have a dedicated control plane to mage the services. Also, an observability stack will be attached which allows developers to monitor the services and the platform. A state controller will make sure the services are rolled-out as per the developers' requirements and the states are maintained properly. The state controller will also make sure the services are scaled appropriately.
 
@@ -130,7 +134,7 @@ As a summary following are the tools we will be using for the solution we are bu
 
 Now let's look at a reference design we can create with the aforementioned toolset. At a glance, each tenant space would be something similar to the below component diagram. The following image shows where each component falls within the platform.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__9c00ntBi8Ot0NXzXbk2Q7Q.png)
+![](/assets/img/medium/1__9c00ntBi8Ot0NXzXbk2Q7Q.png)
 
 In the above diagram, we have the WSO2 Micro-Integration stack, Observability stack, and other components that are needed to make the platform cater to the user requirements. We will talk about each flow in detail in the following sections.
 
@@ -138,13 +142,13 @@ In the above diagram, we have the WSO2 Micro-Integration stack, Observability st
 
 We will be following a Git-ops based approach to onboard and manage tenant services. Hence the entry point for tenant onboarding will be a Git repo itself. Also, service onboarding and service lifecycle management will be done via Gitops. In order to adopt the Git-ops strategy, a repository structure can be designed as shown below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__5Dc5NGKyGu7l152WAm5Adg.png)
+![](/assets/img/medium/1__5Dc5NGKyGu7l152WAm5Adg.png)
 
 As depicted in the above image, the platform will have a central repo where tenants can self onboard into the platform by creating a tenant metadata file. Then the tenants can onboard their services by adding service-related metadata to the tenants' metadata file. When a tenant-specific metadata file is committed to this repo, a separate namespace will be created in K8S for this particular tenant. Each Tenant repository will be pointing to multiple service repositories where it will have three branches representing each environment(Dev, Test, and Prod). The tenants should be able to omit the creation of environments if they wish to do so. Deployment of services to different environments will be handled by the commits happening in each of these branches. For example, the developers can keep on working on the dev/test branch, and when they are ready to release to the production they can simply merge the test branch with the production which will trigger a release pipeline.
 
 Now let's look at how the tenant onboarding happens with the Gitops approach. The following image depicts the tenant onboarding flow.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__TM8W69__Gz8zRlWhrkOVC1A.png)
+![](/assets/img/medium/1__TM8W69__Gz8zRlWhrkOVC1A.png)
 
 As shown in the above diagram initially a tenant user will send a PR to the IMaaS Repository which needs to be approved by platform admins. Once approved the changes will be picked up by a Jenkins Job and necessary resources for the tenant will be created. The process will create a dedicated namespace in K8S, a dedicated Docker registry in a private docker registry, and required CD pipelines in ArgoCD. Once the tenant is onboarded the tenants can start onboarding the services.
 
@@ -152,13 +156,13 @@ As shown in the above diagram initially a tenant user will send a PR to the IMaa
 
 This section explains how the service lifecycle can be managed. The following image depicts the CICD process of a tenant service. This process captures the flow that happens when the developers are moving the source from their local environments up to the development/test environment.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__hJKt__N9FjpXUA1qaY__GLeQ.png)
+![](/assets/img/medium/1__hJKt__N9FjpXUA1qaY__GLeQ.png)
 
 The above flow has two independent flows. The CI flow and the CD flow. The CI flow starts when the developers push the source code to the integration source repo or if they manually trigger the pipeline. First, the pipeline builds the integration source and runs unit tests on the source, after the source is built the deployment artifacts will be packed to a docker image and then the image is pushed to a Docker registry. After the updated docker image is pushed the CD process will be triggered by adding a commit to the tenant service repo. This will be picked by the CD job, the helm charts will be updated which will be picked by ArgoCD, and then the Environment will be updated with the latest changes.
 
 Once the developers are confident that the development work is completed and the integrations are stable to be released to the production they can follow the below flow which captures production release process.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__2hvQP0M58kRRU0f5YEGmNA.png)
+![](/assets/img/medium/1__2hvQP0M58kRRU0f5YEGmNA.png)
 
 In the above flow in order to trigger the release process, the developers have to merge the staging/dev branch with the production branch. Merging into the production will trigger the production release.
 

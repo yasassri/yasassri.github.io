@@ -8,11 +8,15 @@ description: >-
 date: '2021-01-12T04:31:20.922Z'
 categories: []
 keywords: []
-slug: >-
-  /@ycrnet/push-your-container-logs-without-a-side-car-example-with-wso2-mi-newrelic-and-fluent-bit-adb085534f0c
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt:
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__wY0FL1BxcZKPvxsS.jpg)
+![](/assets/img/medium/0__wY0FL1BxcZKPvxsS.jpg)
 
 Kubernetes has become the defacto standard for Container orchestration when deploying large-scale applications. It provides an easy abstraction for efficiently managing large-scale containerized applications with declarative configurations, an easy deployment mechanism, observability, security, and both scaling and failover capabilities. As with any type of application, collecting and analyzing logs is crucial when observing the applications, to make sure the applications are running smoothly. Given K8S is a platform that can run hundreds of Pods at a given time, having a centralized Logging mechanism enhances the developer experience which allows them to easily monitor the logs.
 
@@ -24,15 +28,15 @@ As I mentioned earlier the side-car is the standard way to push logs from your a
 
 #### How Kubernetes Logging Works
 
-The standard way for an application to log, is to push the application logs in to the standard out(std-out). What ever that is written to the std-out will be shown by the _kubectl logs_ command. All the logs that are generated from the containers(all the std-out streams generated from all the containers) will be written to files in the minion(worker) node where the pod is running. By default these logs get written in to “/var/log” directory.
+The standard way for an application to log, is to push the application logs in to the standard out(std-out). What ever that is written to the std-out will be shown by the _kubectl logs_ command. All the logs that are generated from the containers(all the std-out streams generated from all the containers) will be written to files in the minion(worker) node where the pod is running. By default these logs get written in to “/var/log" directory.
 
 The pod related logs will be stored in /var/log/pods/ and the content of this directory will look like following.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__OsDFOSdXG8Nb__bJOZV8xRA.png)
+![](/assets/img/medium/1__OsDFOSdXG8Nb__bJOZV8xRA.png)
 
 As shown in the above image the pods directory have sub directory to represent each pod. The structure within the log directory doesn’t have a folder hierarchy to represent different namespaces, deployments etc. But simply follows a naming convention to differentiate the logs. Also in-order to make the automation process of reading these logs easy, the container log files are sym-linked to files in /var/log/containers. The contents in /var/log/containers are depicted in the below image.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__uwlYjkwERNvkybiZ.jpg)
+![](/assets/img/medium/0__uwlYjkwERNvkybiZ.jpg)
 
 As shown above, the log files in the /var/log/containers directory are sym-linked with the actual log files available in the /var/log/pods directory. If we look closely at the log file we can see a naming convention again. Understanding this naming convention is important when filtering the relevant log files which needs to be pushed to the log analyzer. The file naming format is similar to below.
 
@@ -48,7 +52,7 @@ If you want to select all the logs in a specific namespace you can use a regex p
 
 \_<NAMESPACE>\_\*.log
 
-If you want to select specific pods in a specific namespace, first you have to come up with a naming convention for your containers. For example you can add a known prefix/postfix for the name of your container, so if we name out application container as “wso2mi-integration” wso2mi is the prefix we will be using to filter the logs. The regex to filterout containers in a specific namespace with the prefix wso2mi will look something similar to below.
+If you want to select specific pods in a specific namespace, first you have to come up with a naming convention for your containers. For example you can add a known prefix/postfix for the name of your container, so if we name out application container as “wso2mi-integration" wso2mi is the prefix we will be using to filter the logs. The regex to filterout containers in a specific namespace with the prefix wso2mi will look something similar to below.
 
 \*\_<NAMESPACE>\_wso2mi-\*.log
 
@@ -66,7 +70,7 @@ Before building the use-case let’s try to understand what are we going to buil
 
 The solution at a very highlevel can be captured as shown in the below image.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__5Wd__RBHt5a__TcTTg.jpg)
+![](/assets/img/medium/0__5Wd__RBHt5a__TcTTg.jpg)
 
 As shown above for each filter criteria(e.g: Per name space, Per container group etc.) we will be running a daemon set. These Daemonsets are responsible to reading the relevant logs and pushing them to the correct Newrelic account.
 
@@ -94,7 +98,7 @@ helm install wso2-mi . -n test-tenant
 
 > kubectl get all -n test-tenant
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__S7yV6QB7poN__Fr__nejXA7A.png)
+![](/assets/img/medium/1__S7yV6QB7poN__Fr__nejXA7A.png)
 
 #### **Installing the Daemonset**
 
@@ -115,11 +119,11 @@ git clone [https://github.com/newrelic/helm-charts](https://github.com/newrelic/
 *   In the cloned repository, navigate to helm-charts/charts/newrelic-logging/ and open the values.yaml file
 *   In the values.yaml file add the license key of the Newrelic account as shown below. (You can generate a license key from your newrelic account)
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__hsjGPgCWUZ3hkOYP.jpg)
+![](/assets/img/medium/0__hsjGPgCWUZ3hkOYP.jpg)
 
 *   In the same file specify the relevant regex pattern to filter-out the correct log files. Note the naming convention of the log files when creating the pattern. <POD\_NAME>\_<NAMESPACE>\_<CONTAINER\_NAME>-\*.log A sample log pattern is \*\_<NAMESPACE>\_\*.log
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__Xtmmi7tfBq46Hk1W.jpg)
+![](/assets/img/medium/0__Xtmmi7tfBq46Hk1W.jpg)
 
 **Step 03**
 
@@ -129,17 +133,17 @@ _helm install tenant01-logger ._
 
 *   You can check the created resources as shown below. The ready count should match with the number minion nodes you have in your K8S cluster.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__NPgrVyBYxDOS2VL4.jpg)
+![](/assets/img/medium/0__NPgrVyBYxDOS2VL4.jpg)
 
 #### Checking the logs in Newrelic
 
 Inorder to check the application logs you needs to login to the Newrelic Dashboard and logs will be available in the logs section.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__yUHn9LIdUGpmTMlM.jpg)
+![](/assets/img/medium/0__yUHn9LIdUGpmTMlM.jpg)
 
 In Newrelic the logs can be filtered based on different attributes etc. To check what are the log related attributes you can click on a log entry.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__agN3xsA7XiLW1s__P.jpg)
+![](/assets/img/medium/0__agN3xsA7XiLW1s__P.jpg)
 
 Thats it! Please drop a comment if you have any queries.
 

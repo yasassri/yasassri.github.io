@@ -8,11 +8,15 @@ description: >-
 date: '2021-03-31T05:02:13.195Z'
 categories: []
 keywords: []
-slug: >-
-  /@ycrnet/building-your-wso2-integrations-with-unit-tests-a-guide-for-wso2-micro-integrator-enterprise-42fa1b202413
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt:
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__UfYm4efE__QTONlm5.jpg)
+![](/assets/img/medium/0__UfYm4efE__QTONlm5.jpg)
 
 WSO2 Micro Integrator(MI) and Enterprise Integrator(EI) is a feature rich Opensource Integration platform which provides traditional Enterprise Service Bus capabilities combined with modern cutting edge features. Developing and deploying integration use cases with WSO2 MI/EI is similar to developing any kind of application, which follows a similar lifecycle. When developing an integration use case, you have the source code, which consist of unit tests and when the source is compiled, the unit tests are executed and it produces a deployable artefact. In this post I will unveil few strategies you can adopt when running unit tests for your integrations.
 
@@ -44,7 +48,7 @@ In this method, we are using a remote MI server to execute Unit tests, If you ha
 
 So let’s look at the implementation. The pipeline will first clone the integration source code from Github, then it will start an MI Container and then build the source with unit tests. The units tests will run on the MI container we are starting. Additionally we can deploy the artefacts to a lower environment and run integration tests on top of the integrations as well. The pipeline will simply look something similar to below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__nFKTHkjYBYShjKBKQuXGzw.png)
+![](/assets/img/medium/1__nFKTHkjYBYShjKBKQuXGzw.png)
 
 The Jenkins pipeline code that is used given below. Please note that following code is for demo purposes and may not be production ready.
 
@@ -67,7 +71,7 @@ After building the image and pushing it to a registry you can use the following 
 
 The pipeline will look like something below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__kKBhNJEtVHkbvzTf7w3J6g.png)
+![](/assets/img/medium/1__kKBhNJEtVHkbvzTf7w3J6g.png)
 
 Following is the source code of the Jenkins pipeline and the full pipeline source is available [here](https://github.com/yasassri/unittest-build-demo/blob/main/BuilInContainer_Pipeline.yaml).
 

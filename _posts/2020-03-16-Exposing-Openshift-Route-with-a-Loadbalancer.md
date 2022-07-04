@@ -6,10 +6,13 @@ description: >-
 date: '2020-03-16T16:53:06.319Z'
 categories: []
 keywords: []
-slug: /@ycrnet/exposing-openshift-route-with-a-loadbalancer-ad40103ba3f4
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Ha5OaVmAjHpMaHWM.jpg
+  width: 800
+  height: 500
+  alt: Amazon AWS
 ---
-
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__Ha5OaVmAjHpMaHWM.jpg)
 
 Openshift is the commercial Kubernetes offering that is built and backed by RedHat. Although the underline runtime of Openshift is Kubernetes there are few differences when it comes to Openshift from Kubernetes. Mainly traffic routing, scaling/rollbacks, and deployments are different in Openshift. I’m not going to talk much about Openshift or Kubernetes in this post. In this post, I will explain how we can front an Openshift Route with an external load balancer.
 
@@ -17,11 +20,11 @@ Route is the mechanism that allows you to expose an Openshift service externally
 
 Before we start the configurations we need to understand how the actual routing happens. When a request is received to the Openshift router the router will use the SNI(Server Name Identifier) information in the HTTP handshake to identify the service the request should be routed to. For example, if there are multiple services that are running in Openshift, the service calls are differentiated with the SNI information. You can refer to the following as an example.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__dW4YjlBXqqTHNwRH.jpg)
+![](/assets/img/medium/0__dW4YjlBXqqTHNwRH.jpg)
 
 In this post, we look at how we can front the Openshift route with an external load balancer. There are many occasions you will have to do this. In most cases, within an organization, the internal applications will be exposed to the internet through a Loadbalancer to isolate the networks. In my case, I had two different Openshift clusters (DR and Production) which I had to loadbalance between, So I had to front these two Openshift clusters with an F5 load balancer. In this post, I will not use F5, but I will be using Nginx as an application Loadbalancer and HAProxy as a TCP loadbalancer. Following is how the end-result will look.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__Gt3NoMD3dr7jgWjy.jpg)
+![](/assets/img/medium/0__Gt3NoMD3dr7jgWjy.jpg)
 
 From the above diagram, it seems like a simple thing to do but it isn’t. As you can see I have two hostnames to access the services, one hostname for the internal users and one for the external users. Since Openshift routes rely on SNI information in the handshake to decide the service the request should be sent it’s not straight forward to achieve this.
 
@@ -31,7 +34,7 @@ There are multiple ways to achieve this, I will explain each method in the below
 
 The easiest way to achieve this is using a TCP loablancer to stream the requests directly to the route, but what’s important is in this case you need to create two different routes, one for the public DNS and the other with the internal Openshift DNS. Traffic thats originating externally will reach the route with the public DNS and the others to the internal route.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0____7miiFsUwbbX__gKS.jpg)
+![](/assets/img/medium/0____7miiFsUwbbX__gKS.jpg)
 
 I have used HAProxy to demonstrate this. Following is the haproxy.cfg I used to achieve this.
 
@@ -39,7 +42,7 @@ I have used HAProxy to demonstrate this. Following is the haproxy.cfg I used to 
 
 This is the more complex approach where you will terminate the connection at the main LB and initiate a new connection with the Openshift Route. As I mentioned earlier Openshift route identifies the appropriate route with the SNI information. So I had to set the SNI information when the second connection is made from the External Loadbalancer to Openshift Route.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__oIiVQ0eH9__2TBtnh.jpg)
+![](/assets/img/medium/0__oIiVQ0eH9__2TBtnh.jpg)
 
 Following is the NginX configuration that you can use to achieve this. Please note the important properties like **proxy\_ssl\_name, proxy\_ssl\_server\_name** which are used to set new SNI information for the connection.
 

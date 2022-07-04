@@ -6,11 +6,15 @@ description: >-
 date: '2021-03-01T17:59:10.689Z'
 categories: []
 keywords: []
-slug: >-
-  /@ycrnet/keeping-your-wso2-products-up-to-date-in-a-containerised-environment-1c511d2de10f
+tags: [java, aws]
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt:
 ---
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/0__zXUtxoVAEVjiiNXY.gif)
+![](/assets/img/medium/0__zXUtxoVAEVjiiNXY.gif)
 
 Modern day enterprises and businesses rely on a variety of integral applications/systems to fulfill their business requirements. These systems can vary from a simple HR system to a complex API Management platform. Given the businesses are highly dependent on these different underline systems that are integrated into their core business requirements, it’s crucial to keep these systems up to date.
 
@@ -22,11 +26,11 @@ What this post will not cover is how to update a complete platform(including con
 
 #### WSO2 Releases and Updates.
 
-In general WSO2 follows a release cycle and this can be quarterly, annually etc. depending on the product release strategy. After a product release is done, if “product bugs” or “security vulnerabilities” or “product improvements” are found, WSO2 products are patched and updated. Even after a newer version of a Product is released, WSO2 updates will be provided up until that particular product version reaches EOL. One thing to note is, WSO2 updates are available for customers with an active subscription. (For free users you can always build the product from the source if a bug is being fixed in the source :))
+In general WSO2 follows a release cycle and this can be quarterly, annually etc. depending on the product release strategy. After a product release is done, if “product bugs" or “security vulnerabilities" or “product improvements" are found, WSO2 products are patched and updated. Even after a newer version of a Product is released, WSO2 updates will be provided up until that particular product version reaches EOL. One thing to note is, WSO2 updates are available for customers with an active subscription. (For free users you can always build the product from the source if a bug is being fixed in the source :))
 
 #### Why Update WSO2 Products?
 
-In a nutshell “To Avoid System Failures and Vulnerabilities”. Continuous maintenance of your software solution ensures system health and security throughout its lifetime. In a nutshell, the following are the benefits of frequently updating your WSO2 product.
+In a nutshell “To Avoid System Failures and Vulnerabilities". Continuous maintenance of your software solution ensures system health and security throughout its lifetime. In a nutshell, the following are the benefits of frequently updating your WSO2 product.
 
 *   Utilizing all available updates eliminates the possibility of being stymied by a known issue during your development.
 *   A customer request often results in an improvement, or a fix that is built, well-tested, and delivered to you as an update.
@@ -52,17 +56,17 @@ As shown above, the last digit of the version number increments as updates are r
 
 The tags in the WSO2 docker registry will look like something below, [Official Docker Repositories — Tags (wso2.com)](https://docker.wso2.com/tags.php?repo=wso2mi)
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__pasSFg8yn7jzc4ZiYomsYA.png)
+![](/assets/img/medium/1__pasSFg8yn7jzc4ZiYomsYA.png)
 
 As shown above, the 1.2.0.0-alpine will be the docker image tag with the latest changes. Initially, image 1.2.0.0-alpine will have the GA pack which will be continuously updated/replaced as updates are released. The Docker image metadata will consist of the actual update level of the image.
 
 Inorer to check the metadata of the image you can use the docker inspect command. Once you have inspected the latest image the update level details will be shown as below.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__133H0394uzqjtj81E3wHNw.png)
+![](/assets/img/medium/1__133H0394uzqjtj81E3wHNw.png)
 
 So when we are pulling the base image from the WSO2 private repository we can read the metadata of the docker image and determine the actual update level of the latest tag. When pushing the base image to your private registry we can maintain the same update level as the tag to easily identify the update level. This is depicted in the below diagram.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__r29x8LVTTyIhilR9mJcUXw.png)
+![](/assets/img/medium/1__r29x8LVTTyIhilR9mJcUXw.png)
 
 Maintaining the actual WSO2 update level internally will help the users to learn which changes have gone into the available docker image easily.
 
@@ -72,11 +76,11 @@ Inorder to check the update details you can visit WSO2 updates Portal. [https://
 
 Following is the stadard update view and WSO2 is crrently working on a generic view that can be used for docker updated images. I’ll update the post once this is rolledout to production.
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__hMqWrYtwOVcw__k64OsdLsw.png)
+![](/assets/img/medium/1__hMqWrYtwOVcw__k64OsdLsw.png)
 
 Update details of a specific update will be shown as below,
 
-![](/home/yasassri/Downloads/medium-export-17fe853f8468a5f31fcccd3f4e32406ee150853a411f31fa7e2b689e994b53dc/posts/md_1656890542184/img/1__6HyJdJHPODTPOmc9UkEjpw.png)
+![](/assets/img/medium/1__6HyJdJHPODTPOmc9UkEjpw.png)
 
 ### Implementing a Sample Pipeline
 

@@ -4,9 +4,14 @@ description: >-
   Jenkins is the most widely used CICD/Build tool that’s being used for many
   software projects. The stability and the extensibility of…
 date: '2019-05-20T13:43:28.538Z'
-categories: []
+categories: [Devops, CICD, Jenkins]
+tags: [jenkins, cicd, devops]
 keywords: []
-slug: /@ycrnet/parsing-data-between-jenkins-jobs-4d00cac66880
+image:
+  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  width: 800
+  height: 500
+  alt: Amazon AWS
 ---
 
 Jenkins is the most widely used CICD/Build tool that’s being used for many software projects. The stability and the extensibility of Jenkins has made it the number one go to tool when doing CICD work.

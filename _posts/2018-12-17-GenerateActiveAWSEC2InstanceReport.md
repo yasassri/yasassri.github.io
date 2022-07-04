@@ -4,7 +4,7 @@ description: >-
   When sing AWS for running instance it’s important that we keep an eye on the
   running instances in-order to manage your cost. In most cases…
 date: '2018-12-17T14:28:33.968Z'
-categories: [Dev, Devops]
+categories: [Devops, AWS]
 keywords: []
 tags: [java, aws]
 image:
