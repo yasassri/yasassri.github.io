@@ -31,7 +31,7 @@ In this way the MI runtime should resides in the same machine we are building th
 
 > mvn clean install -DtestServerType=local -DtestServerPath=/mnt/servers/wso2mi-1.2.0/bin/micro-integrator.sh
 
-2\. Using a remote MI Server runtime.
+2. Using a remote MI Server runtime.
 
 In this way we can use a already running MI server runtime and we can specify the host/IP and the port of the remote server.
 
