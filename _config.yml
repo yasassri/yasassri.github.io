@@ -35,7 +35,7 @@ github:
   username: yasassri             # change to your github username
 
 twitter:
-  username: twitter_username            # change to your twitter username
+  username: yasassrir            # change to your twitter username
 
 social:
   # Change to your full name.
@@ -44,8 +44,8 @@ social:
   email: ycrnet@gmail.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/yasassrir      # change to your twitter homepage
-    - https://github.com/yasassri       # change to your github homepage
+    - https://github.com/yasassri 
+    - https://stackoverflow.com/users/2627018/ycr
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
