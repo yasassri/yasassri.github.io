@@ -6,12 +6,12 @@ description: >-
 date: '2018-12-17T14:28:33.968Z'
 categories: [Devops, AWS]
 keywords: []
-tags: [java, aws]
+tags: [java, aws, automation]
 image:
   path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
   width: 800
   height: 500
-  alt: Amazon AWS
+  alt:
 ---
 
 When sing AWS for running instance it’s important that we keep an eye on the running instances in-order to manage your cost. In most cases you will forget that you have started an instance to run your tests and It will run unnecessarily till you notice it. So in this pose I will explain how we can generate a simple Email everyday with the instances that are running. I will be using AWS SDK for this.

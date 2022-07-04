@@ -4,9 +4,9 @@ description: >-
   Openshift is the commercial Kubernetes offering that is built and backed by
   RedHat. Although the underline runtime of Openshift is…
 date: '2020-03-16T16:53:06.319Z'
-categories: []
+categories: [Devops, Openshift]
 keywords: []
-tags: [java, aws]
+tags: [loadbalancing, openshift, nginx, haproxy, tcp]
 image:
   path: /assets/img/medium/0__Ha5OaVmAjHpMaHWM.jpg
   width: 800
@@ -38,6 +38,35 @@ The easiest way to achieve this is using a TCP loablancer to stream the requests
 
 I have used HAProxy to demonstrate this. Following is the haproxy.cfg I used to achieve this.
 
+```yaml
+global
+    log 127.0.0.1   local0
+    log 127.0.0.1   local1 debug
+    maxconn 4096
+
+  defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option redispatch
+    maxconn 2000
+    timeout connect      5000
+    timeout client      50000
+    timeout server      50000
+
+  frontend is.wso2.com
+    bind *:443
+    mode tcp
+    default_backend nodes
+
+  backend nodes
+    mode tcp
+    balance roundrobin
+    server server1 192.168.64.7:443 check
+```
+
 **2\. Using an Application Loadbalancer.**
 
 This is the more complex approach where you will terminate the connection at the main LB and initiate a new connection with the Openshift Route. As I mentioned earlier Openshift route identifies the appropriate route with the SNI information. So I had to set the SNI information when the second connection is made from the External Loadbalancer to Openshift Route.
@@ -45,6 +74,24 @@ This is the more complex approach where you will terminate the connection at the
 ![](/assets/img/medium/0__oIiVQ0eH9__2TBtnh.jpg)
 
 Following is the NginX configuration that you can use to achieve this. Please note the important properties like **proxy\_ssl\_name, proxy\_ssl\_server\_name** which are used to set new SNI information for the connection.
+
+```json
+server {
+  listen 443 ssl;
+  server_name employee.external.com;
+  ssl_certificate /usr/local/etc/nginx/keys/wso2.crt;
+  ssl_certificate_key /usr/local/etc/nginx/keys/wso2.key;
+  location / {
+    proxy_set_header Host employee.apps-crc.testing;
+    proxy_pass https://192.168.64.7;
+    proxy_redirect https://employee.apps-crc.testing/ https://employee.external.com/;
+    proxy_ssl_name employee.apps-crc.testing;
+    proxy_ssl_server_name on;
+    }
+}
+view raw
+
+```
 
 In the above solution, you can use the single route for exposing the services externally and internally. But I would recommend using solution 1 for the above problem to make things simple.
 

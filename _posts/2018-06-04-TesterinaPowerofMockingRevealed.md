@@ -5,7 +5,7 @@ description: >-
   what is ballerina? Ballerina is a general purpose…
 date: '2018-06-04T09:09:31.568Z'
 categories: [WSO2, Ballerina]
-tags: [ballerina, wso2]
+tags: [ballerina, wso2, testing]
 image:
   path: /assets/img/medium/0__q9dEl9CqTReyVSVp.jpg
   width: 800

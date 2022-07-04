@@ -6,7 +6,7 @@ description: >-
 date: '2019-06-29T06:23:28.794Z'
 categories: [WSO2, Generic]
 keywords: []
-tags: [wso2, wso2am, wso2ei]
+tags: [wso2, wso2am, wso2ei, security]
 image:
   path: /assets/img/medium/0__1VoHbE5NJchauQxn.jpg
   width: 800
@@ -23,7 +23,7 @@ In-order to do this we need to use tomcats’ RemoteAddrValve. Follow the steps 
 
 1.  Open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the valve configurations as below,
 ```
-<Valve className=”org.apache.catalina.valves.RemoteAddrValve” allow=”10\\.100\\.5\\.112"/>
+<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="10\\.100\\.5\\.112"/>
 ```
 
 2\. Then restart the server for changes to be effective.
@@ -34,41 +34,42 @@ Above filter will only allow requests that are originating from the 10\\.100\\.5
 
 In this case we are validating whether the requests are generated for a specific Host. By default Tomcat doesn’t do a DNS lookup on the clients IP to determine the Host name if the client. So we need to enable this in the relevent tomcat connector. After enabling dns lookup you have to use RemoteHostValve in tomcat to validate the host. Follow instructions below to do this.
 
-1.  Open To do that open “_<IS\_HOME>/repository/conf/tomcat/catalina-server.xml”_ and enable _enableLookups_ property. Full connector configurations will look like following.
+1.  Open To do that open “_<IS\_HOME>/repository/conf/tomcat/catalina-server.xml"_ and enable _enableLookups_ property. Full connector configurations will look like following.
 
 ```xml
-<Connector protocol=”org.apache.coyote.http11.Http11NioProtocol”  
- port=”9443"  
- bindOnInit=”false”  
- sslProtocol=”TLS”  
- sslEnabledProtocols=”TLSv1,TLSv1.1,TLSv1.2"  
- maxHttpHeaderSize=”8192"  
- acceptorThreadCount=”2"  
- maxThreads=”250"  
- minSpareThreads=”50"  
- disableUploadTimeout=”false”  
- **enableLookups=”true”**  
- connectionUploadTimeout=”120000"  
- maxKeepAliveRequests=”200"  
- acceptCount=”200"  
- server=”WSO2 Carbon Server”  
- clientAuth=”want”  
- compression=”on”  
- scheme=”https”  
- secure=”true”  
- SSLEnabled=”true”  
- compressionMinSize=”2048"  
- noCompressionUserAgents=”gozilla, traviata”  
- compressableMimeType=”text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg”  
-keystoreFile=”${carbon.home}/repository/resources/security/wso2carbon.jks”  
-keystorePass=”wso2carbon”  
-URIEncoding=”UTF-8"/>
+<Connector protocol="org.apache.coyote.http11.Http11NioProtocol"  
+ port="9443"  
+ bindOnInit="false"  
+ sslProtocol="TLS"  
+ sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"  
+ maxHttpHeaderSize="8192"  
+ acceptorThreadCount="2"  
+ maxThreads="250"  
+ minSpareThreads="50"  
+ disableUploadTimeout="false"  
+ **enableLookups="true"**  
+ connectionUploadTimeout="120000"  
+ maxKeepAliveRequests="200"  
+ acceptCount="200"  
+ server="WSO2 Carbon Server"  
+ clientAuth="want"  
+ compression="on"  
+ scheme="https"  
+ secure="true"  
+ SSLEnabled="true"  
+ compressionMinSize="2048"  
+ noCompressionUserAgents="gozilla, traviata"  
+ compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"  
+keystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"  
+keystorePass="wso2carbon"  
+URIEncoding="UTF-8"/>
 ```
 
 2\. Next open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the following valve configuration,
 
 ```xml
-<Valve className=”org.apache.catalina.valves.RemoteHostValve” allow=”wso2\\.mydomain\\.com"/>
+<Valve className="org.apache.catalina.valves.RemoteHostValve" allow="wso2\\.mydomain\\.com"/>
+```
 
 3\. Then restart the server for changes to get effective.
 
@@ -88,8 +89,10 @@ Please follow instruction below,
 
 1.  Open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the following valve configurations,
 
-<Valve className=”org.apache.catalina.valves.RemoteIpValve”/>  
-<Valve className=”org.apache.catalina.valves.RemoteAddrValve” allow=”10\\.100\\.5\\.112"/>
+```xml
+<Valve className="org.apache.catalina.valves.RemoteIpValve"/>  
+<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="10\\.100\\.5\\.112"/>
+```
 
 2\. Then restart the server for changes to get effective.
 

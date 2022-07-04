@@ -11,7 +11,7 @@ image:
   path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
   width: 800
   height: 500
-  alt: Amazon AWS
+  alt: 
 ---
 
 Jenkins is the most widely used CICD/Build tool that’s being used for many software projects. The stability and the extensibility of Jenkins has made it the number one go to tool when doing CICD work.

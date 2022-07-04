@@ -4,18 +4,15 @@ description: >-
   Every WSO2 product require a DB to persist different data. If we take WSO2 API
   Manager there are multiple DBs used to store different sets…
 date: '2021-05-30T05:33:03.899Z'
-categories: []
+categories: [WSO2, Generic]
 keywords: []
-tags: [java, aws]
+tags: [wso2, windows, mysql]
 image:
-  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  path: /assets/img/medium/0__Mg4MOvswocDYJfUE.jpg
   width: 800
   height: 500
   alt:
 ---
-
-![](/assets/img/medium/0__Mg4MOvswocDYJfUE.jpg)
-
 Every WSO2 product require a DB to persist different data. If we take WSO2 API Manager there are multiple DBs used to store different sets of data, for example, APIM DB, Registry DB, User DB etc. By default these databases are pointed to a H2 Database which resides in the file system. For production deployments these databases should be externalised by pointing it to a production grade Databases like MSSQL, MYSQL, Oracle etc.
 
 In this post I will discuss how WSO2 servers can be connected to MSSQL using Windows Authentication. For this post I will take API Manager 3.2.0 to demo the configurations.

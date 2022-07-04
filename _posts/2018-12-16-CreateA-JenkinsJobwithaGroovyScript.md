@@ -4,8 +4,8 @@ description: >-
   In this post I will share some useful groovy code that can be used when
   creating a Jenkins job using a groovy script, so this groovy…
 date: '2018-12-16T15:27:51.061Z'
-categories: [CICD, Dev]
-tags: [jenkins, cicd, devops, groovy]
+categories: [CICD]
+tags: [jenkins, cicd, devops, groovy, automation]
 image:
   path: /assets/img/medium/0__vJucPzrIyJ0ojuzs.jpg
   width: 800
