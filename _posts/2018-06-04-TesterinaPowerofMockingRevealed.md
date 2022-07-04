@@ -24,11 +24,11 @@ Why should we mock in the first place? Following are some cases where mocking is
 
 A decade ago applications were linear, small, self contained and isolated. We used to have standalone applications which ran by it self, but not anymore. Todays applications are distributed and connected with many other integral components and endpoints. So when it comes to testing these connected application it’s not practically possible to test with all the real connections. So we need to mock these endpoints when we are testing these applications.
 
-**2\. Demand for higher rate of delivery.**
+**2. Demand for higher rate of delivery.**
 
 In good old days we had SDLC models like waterfall model, which is a lengthy process and releases only happened after months of development and testing. But nowadays we have daily releases, with CICD coming into the picture, build time of an application does matter a-lot when an application is to be delivered in quick pace. If the build takes days this would affect the release cycles and developers efficiency. So if we are running our tests with real component integrations which sometimes consumes more time (e.g : database integration) the release process will be drags to test execution time. So in-order to cutdown the test execution time we can mock the components that consumes more time.
 
-**3\. Test driven development**
+**3. Test driven development**
 
 Test driven development is one of the most popular trends in software development today. In test driven development developers writeup their tests first and keep on developing the feature till all the tests are passing. So what if the component you are building need to interact with a different component which is developed by a different team, can you wait for that feature to be completed? So again we might have to mock that component and do the development.
 

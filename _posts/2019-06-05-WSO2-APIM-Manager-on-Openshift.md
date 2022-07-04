@@ -16,9 +16,9 @@ In this post I will be explaining how WSO2 products can be deployed on top of Op
 
 Openshift is the commercial Kubernetes offering that is provided by RedHat. Although the underline runtime is Kubernetes there are few differences when it comes to Openshift from Kubernetes. Mainly traffic routing, scaling/rollbacks and deployments are different in Openshift. Feature wise the main deferences are,
 
-1\. Routes  
-2\. Deployment Configs  
-3\. Image streams etc.
+1. Routes  
+2. Deployment Configs  
+3. Image streams etc.
 
 Routes are similar to ingress controllers in Kubernetes and routes are responsible for exposing the services externally. Deployment configs are similar to Deployments in Kubernetes but the internally it operated differently. It is true that we can use most of the kubernetes  
 configurations within openshift as it is, but using Kubernetes artifacts as they are won’t let you utilize the added features that are available in Openshift.  

@@ -44,7 +44,7 @@ access\_log\_file\_date\_format=yyyy-MM-dd
 
 #access\_log\_directory="/logs"
 
-3\. Now restart the server and invoke an API.
+3. Now restart the server and invoke an API.
 
 A new file will be created in the specified logging directory with the specified prefix. By default it will be created in _<SERVER\_HOME>/repository/logs_ directory. Also note that this file support rolling file appending.
 

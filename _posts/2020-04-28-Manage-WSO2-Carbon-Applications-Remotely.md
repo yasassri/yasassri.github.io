@@ -34,7 +34,7 @@ The source for this client resides at [https://github.com/yasassri/wso2-capp-man
 
 > mvn clean install
 
-3\. This will create an executable uber Jar in the target directory. Refer the following screenshot.
+3. This will create an executable uber Jar in the target directory. Refer the following screenshot.
 
 ![](/assets/img/medium/0__kY7tBfAl2foTpnQb.jpg)
 

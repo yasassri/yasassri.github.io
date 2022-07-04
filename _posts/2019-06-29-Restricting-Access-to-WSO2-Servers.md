@@ -21,20 +21,21 @@ Take a scenario where the WSO2 server is accessed directly without a load balanc
 
 In-order to do this we need to use tomcats’ RemoteAddrValve. Follow the steps below to add the valve.
 
-1.  Open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the valve configurations as below,
-```
-<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="10\\.100\\.5\\.112"/>
+1.  Open <WSO2_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the valve configurations as below,
+
+```xml
+<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="10.100.5.112"/>
 ```
 
-2\. Then restart the server for changes to be effective.
+2. Then restart the server for changes to be effective.
 
-Above filter will only allow requests that are originating from the 10\\.100\\.5\\.112 IP. Also note the value for the allow property accepts a regex, so you can add a proper regex pattern here. There are few attributes you can set in the valve. You can also add multiple IPs, deny access to specific IPs etc. You can refer the tomcat documents [https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote\_Address\_Filter](https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote_Address_Filter) for more details on this.
+Above filter will only allow requests that are originating from the 10.100.5.112 IP. Also note the value for the allow property accepts a regex, so you can add a proper regex pattern here. There are few attributes you can set in the valve. You can also add multiple IPs, deny access to specific IPs etc. You can refer the tomcat documents [https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote_Address_Filter](https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote_Address_Filter) for more details on this.
 
 #### White List a Host Name When Accessing the Server
 
 In this case we are validating whether the requests are generated for a specific Host. By default Tomcat doesn’t do a DNS lookup on the clients IP to determine the Host name if the client. So we need to enable this in the relevent tomcat connector. After enabling dns lookup you have to use RemoteHostValve in tomcat to validate the host. Follow instructions below to do this.
 
-1.  Open To do that open “_<IS\_HOME>/repository/conf/tomcat/catalina-server.xml"_ and enable _enableLookups_ property. Full connector configurations will look like following.
+1.  Open To do that open "<IS_HOME>/repository/conf/tomcat/catalina-server.xml" and enable _enableLookups_ property. Full connector configurations will look like following.
 
 ```xml
 <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"  
@@ -65,15 +66,15 @@ keystorePass="wso2carbon"
 URIEncoding="UTF-8"/>
 ```
 
-2\. Next open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the following valve configuration,
+2. Next open <WSO2_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the following valve configuration,
 
 ```xml
-<Valve className="org.apache.catalina.valves.RemoteHostValve" allow="wso2\\.mydomain\\.com"/>
+<Valve className="org.apache.catalina.valves.RemoteHostValve" allow="wso2.mydomain.com"/>
 ```
 
-3\. Then restart the server for changes to get effective.
+3. Then restart the server for changes to get effective.
 
-Now if you try to access the WSO2 server with [https://wso2.mydomain.com](https://wso2%5C.mydomain%5C.com):9443/carbon you will be able to access but if you try to access the server with a different host you will be access denied. You can get more details on this valve from here [https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote\_Host\_Filter](https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote_Host_Filter)
+Now if you try to access the WSO2 server with [https://wso2.mydomain.com](https://wso2%5C.mydomain%5C.com):9443/carbon you will be able to access but if you try to access the server with a different host you will be access denied. You can get more details on this valve from here [https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote_Host_Filter](https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Remote_Host_Filter)
 
 #### White List a Client IP When Accessing the Server through a LB
 
@@ -87,13 +88,13 @@ Inorder to get the original clients IP we need to use tomcats RemoteIpValve this
 
 Please follow instruction below,
 
-1.  Open <WSO2\_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml and add the following valve configurations,
+1.  Open `<WSO2_HOME>/repository/conf/tomcat/carbon/META-INF/context.xml` and add the following valve configurations,
 
 ```xml
 <Valve className="org.apache.catalina.valves.RemoteIpValve"/>  
-<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="10\\.100\\.5\\.112"/>
+<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="10.100.5.112"/>
 ```
 
-2\. Then restart the server for changes to get effective.
+2. Then restart the server for changes to get effective.
 
 Now if you try to access the WSO2 server with the client 10.100.5.112 you will be allows to access WSO2 servers. But for other clients the requests will be blocked. You can use what ever valve you desire in cinjuction with the RemoteIpValve.

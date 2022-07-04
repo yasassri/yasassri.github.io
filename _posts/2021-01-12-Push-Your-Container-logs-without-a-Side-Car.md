@@ -83,7 +83,7 @@ In order to deploy the application to K8S environment I will be using helm chart
 kubectl create namespace test-tenant
 ```
 
-2\. Then clone the helm chart repository and checkout the correct tag.
+2. Then clone the helm chart repository and checkout the correct tag.
 
 git clone [https://github.com/wso2/kubernetes-mi.git](https://github.com/wso2/kubernetes-mi.git)  
 
@@ -92,13 +92,13 @@ cd kubernetes-mi
 git checkout tags/v1.2.0.1
 ```
 
-3\. Then navigate to helm/micro-integrator directory and issue helm install command.
+3. Then navigate to helm/micro-integrator directory and issue helm install command.
 
 ```sh
 helm install wso2-mi . -n test-tenant
 ```
 
-4\. Now you can check whether MI is deployed by browsing the resources.
+4. Now you can check whether MI is deployed by browsing the resources.
 
 ```sh
 > kubectl get all -n test-tenant

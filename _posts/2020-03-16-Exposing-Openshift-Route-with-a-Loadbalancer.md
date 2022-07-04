@@ -67,7 +67,7 @@ global
     server server1 192.168.64.7:443 check
 ```
 
-**2\. Using an Application Loadbalancer.**
+**2. Using an Application Loadbalancer.**
 
 This is the more complex approach where you will terminate the connection at the main LB and initiate a new connection with the Openshift Route. As I mentioned earlier Openshift route identifies the appropriate route with the SNI information. So I had to set the SNI information when the second connection is made from the External Loadbalancer to Openshift Route.
 
@@ -75,7 +75,7 @@ This is the more complex approach where you will terminate the connection at the
 
 Following is the NginX configuration that you can use to achieve this. Please note the important properties like **proxy\_ssl\_name, proxy\_ssl\_server\_name** which are used to set new SNI information for the connection.
 
-```json
+```
 server {
   listen 443 ssl;
   server_name employee.external.com;
@@ -89,8 +89,6 @@ server {
     proxy_ssl_server_name on;
     }
 }
-view raw
-
 ```
 
 In the above solution, you can use the single route for exposing the services externally and internally. But I would recommend using solution 1 for the above problem to make things simple.
