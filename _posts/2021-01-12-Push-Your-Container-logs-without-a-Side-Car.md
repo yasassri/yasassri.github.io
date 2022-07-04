@@ -37,21 +37,21 @@ As shown in the above image the pods directory have sub directory to represent e
 
 As shown above, the log files in the /var/log/containers directory are sym-linked with the actual log files available in the /var/log/pods directory. If we look closely at the log file we can see a naming convention again. Understanding this naming convention is important when filtering the relevant log files which needs to be pushed to the log analyzer. The file naming format is similar to below.
 
-**<POD\_NAME>\_<NAMESPACE>\_<CONTAINER\_NAME>-\*.log**
+**<POD_NAME>_<NAMESPACE>_<CONTAINER_NAME>-\*.log**
 
 ### Filtering the Logs
 
 In order to filter out the logs we can use naming conventions and regex patterns. Fluent-bit allows you to pick log files based on a regex pattern. As mentioned earlier the log file pattern is something similar to below, hence this pattern can be used when filtering the logs.
 
-<POD\_NAME>\_<NAMESPACE>\_<CONTAINER\_NAME>-\*.log
+<POD_NAME>_<NAMESPACE>_<CONTAINER_NAME>-\*.log
 
 If you want to select all the logs in a specific namespace you can use a regex pattern similar to below.
 
-\_<NAMESPACE>\_\*.log
+_<NAMESPACE>_\*.log
 
 If you want to select specific pods in a specific namespace, first you have to come up with a naming convention for your containers. For example you can add a known prefix/postfix for the name of your container, so if we name out application container as “wso2mi-integration" wso2mi is the prefix we will be using to filter the logs. The regex to filterout containers in a specific namespace with the prefix wso2mi will look something similar to below.
 
-\*\_<NAMESPACE>\_wso2mi-\*.log
+\*_<NAMESPACE>_wso2mi-\*.log
 
 ### Building the Solution
 
@@ -129,7 +129,7 @@ git clone [https://github.com/newrelic/helm-charts](https://github.com/newrelic/
 
 ![](/assets/img/medium/0__hsjGPgCWUZ3hkOYP.jpg)
 
-*   In the same file specify the relevant regex pattern to filter-out the correct log files. Note the naming convention of the log files when creating the pattern. <POD\_NAME>\_<NAMESPACE>\_<CONTAINER\_NAME>-\*.log A sample log pattern is \*\_<NAMESPACE>\_\*.log
+*   In the same file specify the relevant regex pattern to filter-out the correct log files. Note the naming convention of the log files when creating the pattern. <POD_NAME>_<NAMESPACE>_<CONTAINER_NAME>-\*.log A sample log pattern is \*_<NAMESPACE>_\*.log
 
 ![](/assets/img/medium/0__Xtmmi7tfBq46Hk1W.jpg)
 

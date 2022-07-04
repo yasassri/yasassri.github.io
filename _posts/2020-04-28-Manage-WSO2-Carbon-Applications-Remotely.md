@@ -96,7 +96,7 @@ Output
 
 If the app you are trying to deploy already exist it will throw the following error.
 
-> _A app already exists with the name cicd-demo-capp\_1.0.1-SNAPSHOT.car_
+> _A app already exists with the name cicd-demo-capp_1.0.1-SNAPSHOT.car_
 
 Also you can use the --force option which will undeploy an existing carbon app and deploy the new application.
 
@@ -153,7 +153,7 @@ Output
 
 ### Understanding the output streams
 
-All the output logs are written into a file and to the console STD\_ERROR. All the output data is written to the console std out. We are writing outputs to the std error because the outputs that should be processable will be written to the stdout. So the output information can be easily processed. The log file will be created at <Execution\_Location>/logs/capp-client.logs
+All the output logs are written into a file and to the console STD_ERROR. All the output data is written to the console std out. We are writing outputs to the std error because the outputs that should be processable will be written to the stdout. So the output information can be easily processed. The log file will be created at <Execution_Location>/logs/capp-client.logs
 
 If you only wants the standard error printed in the console you can pipe the std error to a different file.
 
