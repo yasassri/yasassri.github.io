@@ -6,18 +6,15 @@ description: >-
   WSO2 Micro Integrator(MI) and Enterprise Integrator(EI) is a feature rich
   Opensource Integration platform which provides traditional…
 date: '2021-03-31T05:02:13.195Z'
-categories: []
+categories: [WSO2, Micro Integrator]
 keywords: []
-tags: [java, aws]
+tags: [wso2, wso2mi, testing]
 image:
-  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  path: /assets/img/medium/0__UfYm4efE__QTONlm5.jpg
   width: 800
   height: 500
   alt:
 ---
-
-![](/assets/img/medium/0__UfYm4efE__QTONlm5.jpg)
-
 WSO2 Micro Integrator(MI) and Enterprise Integrator(EI) is a feature rich Opensource Integration platform which provides traditional Enterprise Service Bus capabilities combined with modern cutting edge features. Developing and deploying integration use cases with WSO2 MI/EI is similar to developing any kind of application, which follows a similar lifecycle. When developing an integration use case, you have the source code, which consist of unit tests and when the source is compiled, the unit tests are executed and it produces a deployable artefact. In this post I will unveil few strategies you can adopt when running unit tests for your integrations.
 
 As mentioned WSO2 Micro Integrator and Enterprise Integrator provides the capability to the users to write unit tests to make sure the integration are working as expected. In order to develop integrations the users can use Integration Studio which is an Eclipse based IDE capable of providing users with Drag and drop capabilities as well as source editing capabilities. Also it allows you to write Unit tests and to run these tests easily using the Integrations Studio. The major focus of this post is to discuss how can you execute these tests using maven when the artefacts are built in a CICD pipeline. I’m assuming you already know how to write unit tests in WSO2 Integrations Studio and know basic build commands with Maven.

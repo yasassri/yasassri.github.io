@@ -28,11 +28,11 @@ you to use some neat features that are provided by Openshift, like adding trigge
 
 In this deployment I will be focussing on doing a production ready deployment, where you will do proper backing up of logs etc.
 
-The related artifacts are located in [https://github.com/yasassri/openshift-wso2-apim](https://github.com/yasassri/openshift-wso2-apim) From here on I will refer this repository as <Artifact\_Home>
+The related artifacts are located in [https://github.com/yasassri/openshift-wso2-apim](https://github.com/yasassri/openshift-wso2-apim) From here on I will refer this repository as <Artifact_Home>
 
 #### Understanding the repository structure.
 
-There are several directories in the <Artifact\_Home>. Mainly docker, k8s, scripts, and resources. You can see the repository structure in the below image.
+There are several directories in the <Artifact_Home>. Mainly docker, k8s, scripts, and resources. You can see the repository structure in the below image.
 
 ![](/assets/img/medium/1__9UTyqNAlrlnsbvOOj9Fyhg.png)
 
@@ -100,39 +100,49 @@ Then we have the scripts directory which contains all the automation scripts to 
 
 WSO2 servers require DBs to persist the application and user data, so we need credentials to access a database. This particular DB user should have and Read/Right access to table and Table create permissions with the created Databases.
 
-In the <REPO\_HOME>/resources/db-setup directory it has the following scripts.
+In the <REPO_HOME>/resources/db-setup directory it has the following scripts.
 
 ![](/assets/img/medium/1__uifQfZ__xcnuI6trXPt__t6Q.png)
 
 1.  First inorder to create the necessary databases execute the _1-databases.sql_ script on the MSSQL Server. This will create the necessary DBs.
-2.  Then execute all the scripts within the subfolders to create the necessary tables in the DBs. For _example apim/mssql.sql, common\_um/mssql.sql_. There is no order for the execution, we need to execute all the scripts.
+2.  Then execute all the scripts within the subfolders to create the necessary tables in the DBs. For _example apim/mssql.sql, common_um/mssql.sql_. There is no order for the execution, we need to execute all the scripts.
 3.  Executing the above scripts will create the necessary databases along with the tables. Now create a user who has aforementioned permissions to access the above databases.
 
 #### Creating the key-stores for the servers
 
 You can follow the steps in the below section to create a new keystore with a private key and a new public certificate. We will be using the keytool that is available with your JDK installation for creating the keys-stores. Note that the public key certificate we generate for the keystore is self-signed. Therefore, if you need a public key that is CA-signed, you need to generate a CA-signed certificate and import it to the keystore.
 
-Change the CN name appropriately depending on the environment and execute the following command in the terminal. You can specify any value for the <KEY\_PASS>
+Change the CN name appropriately depending on the environment and execute the following command in the terminal. You can specify any value for the <KEY_PASS>
 
-keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore wso2carbon.jks -dname “CN=\*.apps.wso2.com, OU=BP,O=WSO2,L=EC,S=WS,C=EC" -storepass <KEY\_PASS> -keypass <KEY\_PASS> -validity 7300
+```sh
+keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore wso2carbon.jks -dname “CN=\*.apps.wso2.com, OU=BP,O=WSO2,L=EC,S=WS,C=EC" -storepass <KEY_PASS> -keypass <KEY_PASS> -validity 7300
+```
 
-Here we are using \*.apps.wso2.com as the CN for the self signed certificate. You need to change this depending on your environment. <KEY\_PASS> is the only value you should be changing. Also note that the storepass and the keypass has to be the same.
+Here we are using \*.apps.wso2.com as the CN for the self signed certificate. You need to change this depending on your environment. <KEY_PASS> is the only value you should be changing. Also note that the storepass and the keypass has to be the same.
 
 Next fom the created keystore above lets extract the public certificate from the keystore. To do that execute the following command. This will store the public key in a file called wso2pub.pem.
 
+```sh
 keytool -export -alias wso2carbon -keystore wso2carbon.jks -file wso2pub.pem
+```
 
 Now let’s import this to the client-trustore.jks of WSO2 server. From any WSO2 pack copy the client-trustore.jks and from where the keystore is located execute the following command to delete the existing public certificate. When prompted for the password enter wso2carbon as the password.
 
+```sh
 keytool -delete -alias wso2carbon -keystore client-truststore.jks
+```
 
 Then execute the following command to import the new public certificate we created.
 
-keytool -import -alias wso2carbon -file wso2pub.pem -keystore client-truststore.jks -storepass <KEY\_PASS>
+```sh
+keytool -import -alias wso2carbon -file wso2pub.pem -keystore client-truststore.jks -storepass <KEY_PASS>
+```
 
 Next execute the following command to change the default password of the client-trstore. When prompted for the existing password enter wso2carbon as the password.
 
+```sh
 keytool -keystore client-truststore.jks -storepass wso2carbon -storepasswd
+```
 
 You can refer the following documentation for more information on using an existing private key and a certificate to create the necessary keystores. [https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores#CreatingNewKeystores-Creatinganewkeystore](https://docs.wso2.com/display/ADMIN44x/Creating+New+Keystores#CreatingNewKeystores-Creatinganewkeystore)
 
@@ -175,7 +185,7 @@ You can repeat the above steps and get updates for all the products.
 
 After updating the product the product should be available at a location similar to following.
 
-> <USER\_HOME>/.wum3/products/wso2am/2.6.0/full
+> <USER_HOME>/.wum3/products/wso2am/2.6.0/full
 
 If you perform multiple updates you will have multiple distributions in this location so make sure you use the distribution with the latest timestamp. Refer the following image.
 
@@ -185,47 +195,50 @@ If you perform multiple updates you will have multiple distributions in this loc
 
 Before we start deploying WSO2 artifact we need to prepare Openshift environment. In the openshift environment we need to create a project, service account etc. This needs to performed by the Openshift administrator. The Openshift administrator can refer the script [1-prepare-openshift.sh](https://github.com/yasassri/openshift-wso2-apim/blob/master/scripts/1-prepare-openshift.sh) The content of this file is as following,
 
+
+```sh
 #!/bin/bash  
   
-\# ------------------------------------------------------------------------  
-\# Copyright 2019 WSO2, Inc. (http://wso2.com)  
+# ------------------------------------------------------------------------  
+# Copyright 2019 WSO2, Inc. (http://wso2.com)  
 #  
-\# Licensed under the Apache License, Version 2.0 (the "License");  
-\# you may not use this file except in compliance with the License.  
-\# You may obtain a copy of the License at  
+# Licensed under the Apache License, Version 2.0 (the "License");  
+# you may not use this file except in compliance with the License.  
+# You may obtain a copy of the License at  
 #  
-\# http://www.apache.org/licenses/LICENSE-2.0  
+# http://www.apache.org/licenses/LICENSE-2.0  
 #  
-\# Unless required by applicable law or agreed to in writing, software  
-\# distributed under the License is distributed on an "AS IS" BASIS,  
-\# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
-\# See the License for the specific language governing permissions and  
-\# limitations under the License  
-\# ------------------------------------------------------------------------  
+# Unless required by applicable law or agreed to in writing, software  
+# distributed under the License is distributed on an "AS IS" BASIS,  
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
+# See the License for the specific language governing permissions and  
+# limitations under the License  
+# ------------------------------------------------------------------------  
 oc=\`which oc\`  
   
-\# This is for creating the secret to authenticate with the Docker registry.  
-DOCKER\_REG\_URL="docker.wso2.com"  
-PROJECT\_NAME=$K8S\_NAMESPACE  
-DOCKER\_REG\_USERNAME="DOCKER\_REG\_PASSWORD"  
-DOCKER\_REG\_EMAIL="dev@wso2.com"  
+# This is for creating the secret to authenticate with the Docker registry.  
+DOCKER_REG_URL="docker.wso2.com"  
+PROJECT_NAME=$K8S_NAMESPACE  
+DOCKER_REG_USERNAME="DOCKER_REG_PASSWORD"  
+DOCKER_REG_EMAIL="dev@wso2.com"  
   
-oc new-project $PROJECT\_NAME --description="WSO2 Dev Project" --display-name="WSO2 Dev"  
-oc project $PROJECT\_NAME  
+oc new-project $PROJECT_NAME --description="WSO2 Dev Project" --display-name="WSO2 Dev"  
+oc project $PROJECT_NAME  
   
-oc create serviceaccount wso2svc-account -n $PROJECT\_NAME  
+oc create serviceaccount wso2svc-account -n $PROJECT_NAME  
   
-\# Create the pvs   
-\# Most cases this will be created by the cluster admin, so DO NOT execute if already there.  
+# Create the pvs   
+# Most cases this will be created by the cluster admin, so DO NOT execute if already there.  
 oc create -f ../k8s/volumes/persistent-volumes.yaml  
   
-\# Create the Rbac for WSO2 clustering  
+# Create the Rbac for WSO2 clustering  
 oc create -f ../k8s/rbac/rbac.yaml  
   
-\# Creating the  ADM policy to retrieve k8s cluster information from the svc account  
+# Creating the  ADM policy to retrieve k8s cluster information from the svc account  
   
-\# We need to create a Docker registry secret if authentication is required by the registry.  
-#oc create secret docker-registry wso2creds --docker-server=${DOCKER\_REG\_URL} --docker-username=${DOCKER\_REG\_USERNAME} --docker-password=${DOCKER\_REG\_PASSWORD} --docker-email=${DOCKER\_REG\_EMAIL}
+# We need to create a Docker registry secret if authentication is required by the registry.  
+#oc create secret docker-registry wso2creds --docker-server=${DOCKER_REG_URL} --docker-username=${DOCKER_REG_USERNAME} --docker-password=${DOCKER_REG_PASSWORD} --docker-email=${DOCKER_REG_EMAIL}
+```
 
 #### Creating the Docker images and Pushing
 
@@ -233,49 +246,62 @@ Note: You need to have docker installed in the system. Also unzip as well.
 
 After preparing the openshift environment and copying all the WSO2 distributions to a single directory we can start the docker image creation process. Note that I’m using the internal docker registry of Openshift here and you can modify these scripts and use any docker registry that is desired.
 
-Next navigate to the <Artifact\_Home>/scripts directory and open the 0-setEnvironment.sh and set the variables with appropriate values. The content of this file is as below and each variable will be explained below,
+Next navigate to the <Artifact_Home>/scripts directory and open the 0-setEnvironment.sh and set the variables with appropriate values. The content of this file is as below and each variable will be explained below,
 
 Following variable name contains the project name/namespace of the WSO2 deployment, this name is specific to openshift and can be set depending on the environment.
-
-export K8S\_NAMESPACE="wso2"
+```
+export K8S_NAMESPACE="wso2"
+```
 
 This is the docker registry URL of the Openshift environment, you can ask your openshift admin for this.
 
-export DOCKER\_REGISTRY\_URL="registry.apps.wso2.com"  
-export DOCKER\_REGISTRY\_NAMESPACE=$K8S\_NAMESPACE
+```
+export DOCKER_REGISTRY_URL="registry.apps.wso2.com"  
+export DOCKER_REGISTRY_NAMESPACE=$K8S_NAMESPACE
+```
 
 The name of the directory which contains the keystores that are being used
 
-export KEYSTORE\_DIR\_NAME="dev-env" # The directory name which contains environment specific keystores in resources/keystores  
-export WSO2\_PACK\_LOCATION="" # The directory where WSO2 packs reside
+```
+export KEYSTORE_DIR_NAME="dev-env" # The directory name which contains environment specific keystores in resources/keystores  
+export WSO2_PACK_LOCATION="" # The directory where WSO2 packs reside
+```
 
 Following are the DNS names that are used for different WSO2 servers. Need to change the values depending on the environment.
 
+```
 #DNS Names for the servers  
-export APIM\_HOST\_NAME="apim.apps.wso2.com"  
-export APIM\_GW\_HOST\_NAME="gw.apps.wso2.com"  
-export IS\_HOST\_NAME="identity.apps.wso2.com"
+export APIM_HOST_NAME="apim.apps.wso2.com"  
+export APIM_GW_HOST_NAME="gw.apps.wso2.com"  
+export IS_HOST_NAME="identity.apps.wso2.com"
+```
 
 Following are the database details of WSO2
 
+```
 #DB Details  
 #For all the DB’s the same user will be used.  
-export DB\_URL="10.2.1.2:1433" # host:port  
-export DB\_USER="root"  
-export DB\_USER\_PASSWORD="root123456"
+export DB_URL="10.2.1.2:1433" # host:port  
+export DB_USER="root"  
+export DB_USER_PASSWORD="root123456"
+```
 
 WSO2 admin credentials.
 
+```
 #Master admin of the WSO2 server  
-export ADMIN\_USER="admin"  
-export ADMIN\_USER\_PASSWORD="bpadmin"  
-export ADMIN\_USER\_PASSWORD\_ENCODED="YnBhZG1pbg==" # This is the base64 encoded value of the admin password, you can use [https://www.base64encode.org/](https://www.base64encode.org/) to encode.
+export ADMIN_USER="admin"  
+export ADMIN_USER_PASSWORD="bpadmin"  
+export ADMIN_USER_PASSWORD_ENCODED="YnBhZG1pbg==" # This is the base64 encoded value of the admin password, you can use [https://www.base64encode.org/](https://www.base64encode.org/) to encode.
+```
 
 WSO2 keytstore credentials
 
+```
 #Keystore Details  
-export KEYSTORE\_PASSWORD="wso2carbon"  
-export TRUSTORE\_PASSWORD="wso2carbon"
+export KEYSTORE_PASSWORD="wso2carbon"  
+export TRUSTORE_PASSWORD="wso2carbon"
+```
 
 After properly setting the variables source this file. Execute the following command to do this.
 

@@ -4,18 +4,15 @@ description: >-
   Nowadays, enterprises rely on a large number of applications/systems to
   full-fill their business requirements, these systems can vary from…
 date: '2021-03-01T17:59:10.689Z'
-categories: []
+categories: [WSO2, Generic]
 keywords: []
-tags: [java, aws]
+tags: [wso2, docker, wso2am, wso2ei, wso2mi, wum]
 image:
-  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  path: /assets/img/medium/0__zXUtxoVAEVjiiNXY.gif
   width: 800
   height: 500
   alt:
 ---
-
-![](/assets/img/medium/0__zXUtxoVAEVjiiNXY.gif)
-
 Modern day enterprises and businesses rely on a variety of integral applications/systems to fulfill their business requirements. These systems can vary from a simple HR system to a complex API Management platform. Given the businesses are highly dependent on these different underline systems that are integrated into their core business requirements, it’s crucial to keep these systems up to date.
 
 WSO2 is one such Opensource software provider which has a variety of products to cater to different business requirements. You can read more about WSO2 from [here](https://wso2.com/). In this post, I’ll discuss how WSO2 Products can be updated within a containerised environment. In other words how WSO2 updates can be pulled to a containerised environment.

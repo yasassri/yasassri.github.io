@@ -10,14 +10,11 @@ categories: []
 keywords: []
 tags: [java, aws]
 image:
-  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  path: /assets/img/medium/0__BRQZDeO2CpEDqClN.jpg
   width: 800
   height: 500
   alt: 
 ---
-
-![](/assets/img/medium/0__BRQZDeO2CpEDqClN.jpg)
-
 In medium-scale to large-scale corporations, there are numerous teams/business-units that operate cohesively yet independently to drive the organization towards its’ goals and objectives. These teams typically use different integral systems within their business units, which adds up to many different systems been adopted within the Organization. As the number of different systems grows within an Organization it’s going to be a nightmare to manage these different systems and technologies. On the other hand, it’s going to incur a considerable cost to the Organization. Hence as a proactive measure, it’s ideal for an organization to streamline and standardize the technology stack and the process, where the organization can build a common platform that can be used by the business units while eliminating the maintenance and management overhead. In simple terms, the Organization can develop a centralized SaaS platform where different business units can onboard themselves and start developing their integrations with a few clicks without worrying about the service management aspect. We will call this an “Integration Mashup as a Service(IMaaS)" where the platform will facilitate self-onboarding, service reuse, scalability, resilience, and above all streamline the integrations across the entire organization.
 
 In this post, I will be exploring how WSO2 MI can be leveraged to develop an Integration Mashup as Service, Platform.

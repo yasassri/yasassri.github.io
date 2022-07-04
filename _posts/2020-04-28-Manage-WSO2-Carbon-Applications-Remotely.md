@@ -4,18 +4,15 @@ description: >-
   In this post I’ll introduce you to a Java CLI client that I happened to write
   to manage WSO2 Carbon Applications. WSO2 Enterprise…
 date: '2020-04-28T04:12:19.205Z'
-categories: []
+categories: [WSO2, WSO2 EI]
 keywords: []
-tags: [java, aws]
+tags: [java, wso2, wso2ei, automation, cli, cicd]
 image:
-  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  path: /assets/img/medium/0__8O9s0QCFdnDabr__M.jpg
   width: 800
   height: 500
   alt: Amazon AWS
 ---
-
-![](/assets/img/medium/0__8O9s0QCFdnDabr__M.jpg)
-
 In this post I’ll introduce you to a Java CLI client that I happened to write to manage WSO2 Carbon Applications. WSO2 Enterprise Integrator (was known as WSO2 ESB) has a mechanism to develop integration flows externally using Integration Studio and deploy them using .car files. This allows you to change environment specific variables and then deploy the same carbon application (Capp) between multiple environments.
 
 ### Why do we need a Client.
@@ -64,31 +61,33 @@ Following section will explain how the above features can be used.
 
 The client basically requires following parameters to execute. Following parameters are common to all the sub commands.
 
-**— server**: used to specify the server URL
+**--server**: used to specify the server URL
 
-> E.g: -server [https://localhost:9443](https://localhost:9443)
+> E.g: --server [https://localhost:9443](https://localhost:9443)
 
-**— trustore-location**: Specify the location of the client trustore.
+**--trustore-location**: Specify the location of the client trustore.
 
-> E.g: — trustore-location ./client-truststore.jks
+> E.g: --trustore-location ./client-truststore.jks
 
-**— trustore-password:** Specify the password of the trustore
+**--trustore-password:** Specify the password of the trustore
 
-> E.g: — trustore-password wso2carbon
+> E.g: --trustore-password wso2carbon
 
-**— username:** The server access username.
+**--username:** The server access username.
 
-> E.g: — username admin
+> E.g: --username admin
 
-**— password:** Password for the server access user.
+**--password:** Password for the server access user.
 
-> E.g: — password admin
+> E.g: --password admin
 
 #### Deploy CApps
 
 The deploy operation allows you to deploy a given carbon application.
 
-_java -jar capp-manager-1.0.0.jar deploy — server_ [_https://localhost:9443_](https://localhost:9443) _— trustore-location ./client-truststore.jks — trustore-password wso2carbon — username admin — password admin — file ./cicd-demo-capp\_1.0.1-SNAPSHOT.car_
+```sh
+java -jar capp-manager-1.0.0.jar deploy --server [_https://localhost:9443_](https://localhost:9443) --trustore-location ./client-truststore.jks --trustore-password wso2carbon --username admin --password admin --file ./cicd-demo-capp_1.0.1-SNAPSHOT.car
+```
 
 Output
 
@@ -99,17 +98,20 @@ If the app you are trying to deploy already exist it will throw the following er
 
 > _A app already exists with the name cicd-demo-capp\_1.0.1-SNAPSHOT.car_
 
-Also you can use the — force option which will undeploy an existing carbon app and deploy the new application.
+Also you can use the --force option which will undeploy an existing carbon app and deploy the new application.
 
-java -jar capp-manager-1.0.0.jar deploy — server [https://localhost:9443](https://localhost:9443) — trustore-location ./client-truststore.jks — trustore-password wso2carbon — username admin — password admin — file ./cicd-demo-capp\_1.0.1-SNAPSHOT.car — force
-
+```sh
+java -jar capp-manager-1.0.0.jar deploy --server [https://localhost:9443](https://localhost:9443) --trustore-location ./client-truststore.jks --trustore-password wso2carbon --username admin --password admin --file ./cicd-demo-capp_1.0.1-SNAPSHOT.car --force
+```
 ![](/assets/img/medium/0__kJuXoF9GgkZ64vOO.jpg)
 
 ### Undeploy CApp
 
 This operation allows you to undeploy a specified CApp. You have to specify the carbon application name only.
 
-_java -jar capp-manager-1.0.0.jar undeploy — server_ [_https://localhost:9443_](https://localhost:9443) _— trustore-location ./client-truststore.jks — trustore-password wso2carbon — username admin — password admin — app-name cicd-demo-capp_
+```sh
+java -jar capp-manager-1.0.0.jar undeploy --server [_https://localhost:9443_](https://localhost:9443) --trustore-location ./client-truststore.jks --trustore-password wso2carbon --username admin --password admin --app-name cicd-demo-capp
+```
 
 Output
 
@@ -119,7 +121,9 @@ Output
 
 The list operation allows you to list all the carbon applications that are already deployed in the server.
 
-_java -jar capp-manager-1.0.0.jar list-apps — server_ [_https://localhost:9443_](https://localhost:9443) _— trustore-location ./security/client-truststore.jks — trustore-password wso2carbon — username admin — password admin_
+```sh
+java -jar capp-manager-1.0.0.jar list-apps --server [_https://localhost:9443_](https://localhost:9443) --trustore-location ./security/client-truststore.jks --trustore-password wso2carbon --username admin --password admi
+```
 
 Output
 
@@ -127,7 +131,9 @@ Output
 
 If you want to get a processable output you can only read the standard out. In this case you can direct the standard error to a different stream.
 
-_java -jar capp-manager-1.0.0.jar list-apps — server_ [_https://localhost:9443_](https://localhost:9443) _— trustore-location ./client-truststore.jks — trustore-password wso2carbon — username admin — password admin 2> /dev/null_
+```sh
+java -jar capp-manager-1.0.0.jar list-apps --server [_https://localhost:9443_](https://localhost:9443) --trustore-location ./client-truststore.jks --trustore-password wso2carbon --username admin --password admin 2> /dev/null
+```
 
 Output
 
@@ -137,7 +143,9 @@ Output
 
 The download operation allows you to download the specified carbon application to a given location.
 
-_java -jar capp-manager-1.0.0.jar download — server_ [_https://localhost:9443_](https://localhost:9443) _— trustore-location ./client-truststore.jks — trustore-password wso2carbon — username admin — password admin — app-name cicd-demo-capp — destination ./_
+```sh
+java -jar capp-manager-1.0.0.jar download --server [_https://localhost:9443_](https://localhost:9443) --trustore-location ./client-truststore.jks --trustore-password wso2carbon --username admin --password admin --app-name cicd-demo-capp --destination ./
+```
 
 Output
 

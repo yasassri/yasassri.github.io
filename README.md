@@ -2,10 +2,12 @@
 
 WSO2 -> Generic
      -> API Manager
+     -> Micro Integrator
+     -> WSO2 EI
 
 CICD
 
-Devops
+Devops -> Docker
 
 ## Metadata for posts
 

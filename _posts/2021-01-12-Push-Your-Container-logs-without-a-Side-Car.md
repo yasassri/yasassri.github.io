@@ -6,18 +6,15 @@ description: >-
   The common and recommended way to push your container logs into a centralised
   logging mechanism is generally is by using a Sidecar…
 date: '2021-01-12T04:31:20.922Z'
-categories: []
+categories: [Devops, Observability]
 keywords: []
-tags: [java, aws]
+tags: [observability, newrelic, wso2mi, k8s, fluent]
 image:
-  path: /assets/img/medium/0__Mgvcsevtq9ZbvROi.jpg
+  path: /assets/img/medium/0__wY0FL1BxcZKPvxsS.jpg
   width: 800
   height: 500
   alt:
 ---
-
-![](/assets/img/medium/0__wY0FL1BxcZKPvxsS.jpg)
-
 Kubernetes has become the defacto standard for Container orchestration when deploying large-scale applications. It provides an easy abstraction for efficiently managing large-scale containerized applications with declarative configurations, an easy deployment mechanism, observability, security, and both scaling and failover capabilities. As with any type of application, collecting and analyzing logs is crucial when observing the applications, to make sure the applications are running smoothly. Given K8S is a platform that can run hundreds of Pods at a given time, having a centralized Logging mechanism enhances the developer experience which allows them to easily monitor the logs.
 
 The common standard way to push your container logs into a centralized logging mechanism is by using a Sidecar container within your pod. But in case, if you want to avoid using a sidecar and if you need to push the logs to a third-party log analyser you can get an idea of how to do it by reading this post. In this post, I will explore how you can leverage daemon sets to push specific container logs to a log analysing system. In order to set things up, I will be using [Newrelic](https://newrelic.com/) and [Fluent-Bit](https://fluentbit.io/) to get this done. And as the application, I will be using [WSO2 MI](https://ei.docs.wso2.com/en/7.2.0/micro-integrator/overview/introduction/), but you can run any application.
@@ -82,21 +79,30 @@ In order to deploy the application to K8S environment I will be using helm chart
 
 1.  First I will create a new K8S namespace to deploy the application.
 
+```sh
 kubectl create namespace test-tenant
+```
 
 2\. Then clone the helm chart repository and checkout the correct tag.
 
 git clone [https://github.com/wso2/kubernetes-mi.git](https://github.com/wso2/kubernetes-mi.git)  
+
+```sh
 cd kubernetes-mi  
 git checkout tags/v1.2.0.1
+```
 
 3\. Then navigate to helm/micro-integrator directory and issue helm install command.
 
+```sh
 helm install wso2-mi . -n test-tenant
+```
 
 4\. Now you can check whether MI is deployed by browsing the resources.
 
+```sh
 > kubectl get all -n test-tenant
+```
 
 ![](/assets/img/medium/1__S7yV6QB7poN__Fr__nejXA7A.png)
 
@@ -112,7 +118,9 @@ We will be installing the Newrelic’s Fluent Bit output plugin as a daemonset a
 
 *   Clone the following helm repository.
 
+```sh
 git clone [https://github.com/newrelic/helm-charts](https://github.com/newrelic/helm-charts).git
+```
 
 **Step 02**
 
@@ -129,8 +137,9 @@ git clone [https://github.com/newrelic/helm-charts](https://github.com/newrelic/
 
 *   Now install the helm chart. Note that I will be installing the Daemonset to the default namespace.
 
-_helm install tenant01-logger ._ 
-
+```sh
+helm install tenant01-logger . 
+```
 *   You can check the created resources as shown below. The ready count should match with the number minion nodes you have in your K8S cluster.
 
 ![](/assets/img/medium/0__NPgrVyBYxDOS2VL4.jpg)
@@ -144,7 +153,5 @@ Inorder to check the application logs you needs to login to the Newrelic Dashboa
 In Newrelic the logs can be filtered based on different attributes etc. To check what are the log related attributes you can click on a log entry.
 
 ![](/assets/img/medium/0__agN3xsA7XiLW1s__P.jpg)
-
-Thats it! Please drop a comment if you have any queries.
 
 Happy Coding!!!

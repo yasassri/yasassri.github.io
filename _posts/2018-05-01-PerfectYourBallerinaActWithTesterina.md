@@ -3,7 +3,7 @@ title: Perfect Your Ballerina Act — With Testerina
 description: 'Designing a Testable Application'
 date: '2018-05-01T04:24:02.933Z'
 categories: [WSO2, Ballerina]
-tags: [ballerina, wso2]
+tags: [ballerina, wso2, testing]
 image:
   path: /assets/img/posts/ballerina.jpg
   width: 800
