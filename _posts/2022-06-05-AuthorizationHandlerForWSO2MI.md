@@ -27,7 +27,7 @@ As you can see above if the handler is engaged in a service, it will do authenti
 
 ### How to use the Authorization Handler ###
 
-1. First build this project or download the released Jar from https://github.com/yasassri/wso2mi-authorization-handler/releases/tag/v1.0.0 and copy the `wso2-authorization-handler-*.jar` to `<MI_HOME>/lib` directory.
+1. First build this project or download the released Jar from [https://github.com/yasassri/wso2mi-authorization-handler/releases/tag/v1.0.0](https://github.com/yasassri/wso2mi-authorization-handler/releases/tag/v1.0.0) and copy the `wso2-authorization-handler-*.jar` to `<MI_HOME>/lib` directory.
 
 *Note: Make sure you download the latest release.* 
  
@@ -80,5 +80,7 @@ Handler accepts two parameters `roles` and `authorize`.
 - **authorize**: If Authorization(Role validation) is not required this can be set to false. If set to false only authentication will take place. The authorization stage will be skipped. 
 
 *Note: In order to do role management you need to plugin an LDAP or a JDBC user store to MI.* 
+
+Full source code can be ound [here](https://github.com/yasassri/wso2mi-authorization-handler)
 
 Hope this post helps. Happy Coding! 
