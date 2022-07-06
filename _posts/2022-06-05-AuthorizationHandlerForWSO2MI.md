@@ -18,20 +18,21 @@ When creating different services that serve your enterprise traffic it's importa
 
 With the default product, there is no way to enforce authorization for an API/Proxy , hence I came up with a custom Authorization handler.  The next section will explain how you can use the authorization handler. 
 
-### Custom Authorization Handler
+### Custom Authorization Handler ###
 The handler is capable of handling authentication and authorization separately. The user can disable authorization and only use authentication if necessary. Following is a simple flow diagram that illustrates the logical flow. 
 
-![Flow Diagram](/assets/img/posts/authFlow.jpeg){: w="300" h="500"  }
+![](/assets/img/posts/authFlow.jpeg){: w="300" h="500" }
 
 As you can see above if the handler is engaged in a service, it will do authentication first and if authorization is enabled the authorization will be checked. When adding authorization the users can define a list of roles that are allowed to access the service. 
 
-### How to use the Authorization Handler
+### How to use the Authorization Handler ###
 
-1. First build this project or download the released Jar from https://github.com/yasassri/wso2mi-authorization-handler/releases/tag/v1.0.0 and copy the wso2-authorization-handler-*.jar to <MI_HOME>/lib directory.
+1. First build this project or download the released Jar from https://github.com/yasassri/wso2mi-authorization-handler/releases/tag/v1.0.0 and copy the `wso2-authorization-handler-*.jar` to `<MI_HOME>/lib` directory.
 
 *Note: Make sure you download the latest release.* 
  
 2. Then in your API/Proxy service definition you can add the handler as shown below.
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <api xmlns="http://ws.apache.org/ns/synapse" name="test2" context="/test2" binds-to="default">
@@ -56,22 +57,28 @@ As you can see above if the handler is engaged in a service, it will do authenti
 </handlers>
 </api>
 ```
+
 3. Then add the user credentials as a `Basic Auth` header to your request and send the request. Refer following. (Make sure user:password is base64 encoded)
-```bash
+
+```sh
 curl -v -X POST http://localhost:8290/test2 -H "Authorization: Basic YWRtaW46YWRtaW4="
 ```
 *Note: If the Authentication fails you will get a HTTP 401 or if the Authorization fails you will receive a HTTP 403.*
 
 **Handler params.**
+
 Handler accepts two parameters `roles` and `authorize`. 
+
 ```xml
 <handler class="com.ycr.auth.handlers.AuthorizationHandler">
       <property name="roles" value="admin,test" />
       <property name="authorize" value="true" />
 </handler>
 ```
+
 - **roles**: The user can define a list of allowed roles for the API.
 - **authorize**: If Authorization(Role validation) is not required this can be set to false. If set to false only authentication will take place. The authorization stage will be skipped. 
 
 *Note: In order to do role management you need to plugin an LDAP or a JDBC user store to MI.* 
 
+Hope this post helps. Happy Coding! 
