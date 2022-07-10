@@ -27,7 +27,7 @@ $JENKINS_CRUMB ; Jenkis Crumb.
 1. First we need to get the Jenkins `crumb` by passing the `Basic Auth` header. We also need to save the Cookies so we can use the same Cookies when doing the API request for this I'm using `--cookie-jar` option with `curl`.
 
 ```sh
-curl -s --cookie-jar /tmp/cookies -u admin:admin http://localhost:8080/crumbIssuer/api/json
+curl -s --cookie-jar /tmp/cookies -u $JENKINS_USER:$JENKINS_PASSWORD $JENKINS_URL/crumbIssuer/api/json
 ```
 The above will give you a response like the below.
 
