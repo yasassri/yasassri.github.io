@@ -1,7 +1,7 @@
 ---
 title: Custom Github Action for WSO2 APICTL
 description: Custom Github Action for WSO2 APICTL
-date: '2022-11-04'
+date: '2022-10-04'
 categories: [Automation]
 keywords: []
 tags: [Github, cicd, wso2, automation]
@@ -12,7 +12,7 @@ image:
   alt:
 ---
 
-I have worked with Github Actions in some projects and used quite a few Actions written by others. So I wanted to write my own custom action to experience the process. So here I'm with this post after building a custom GitHUb Action to setup WSO2 APICTL. This post will not explain how to build a custom action but rather how to use the custom action that was built. The custom Action is located in the Guthub Market place at https://github.com/marketplace/actions/setup-wso2-apictl
+I have worked with Github Actions in some projects and used quite a few Actions written by others. So I wanted to write my own custom action to experience the process. So here I'm with this post after building a custom GitHUb Action to setup WSO2 APICTL. This post will not explain how to build a custom action but rather how to use the custom action that was built. The custom Action is located in the Guthub Market place at [https://github.com/marketplace/actions/setup-wso2-apictl](https://github.com/marketplace/actions/setup-wso2-apictl) 
 
 ### What is WSO2 API CTL
 
