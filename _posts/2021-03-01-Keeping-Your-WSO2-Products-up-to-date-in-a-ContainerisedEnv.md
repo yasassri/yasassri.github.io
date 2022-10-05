@@ -13,11 +13,11 @@ image:
   height: 500
   alt:
 ---
-Modern day enterprises and businesses rely on a variety of integral applications/systems to fulfill their business requirements. These systems can vary from a simple HR system to a complex API Management platform. Given the businesses are highly dependent on these different underline systems that are integrated into their core business requirements, it’s crucial to keep these systems up to date.
+Modern-day enterprises and businesses rely on a variety of integral applications/systems to fulfill their business requirements. These systems can vary from a simple HR system to a complex API Management platform. Given that businesses are highly dependent on these different underline systems that are integrated into their core business requirements, it’s crucial to keep these systems up to date.
 
-WSO2 is one such Opensource software provider which has a variety of products to cater to different business requirements. You can read more about WSO2 from [here](https://wso2.com/). In this post, I’ll discuss how WSO2 Products can be updated within a containerised environment. In other words how WSO2 updates can be pulled to a containerised environment.
+WSO2 is one such Opensource software provider which has a variety of products to cater to different business requirements. You can read more about WSO2 from [here](https://wso2.com/). In this post, I’ll discuss how WSO2 Products can be updated within a containerized environment. In other words how WSO2 updates can be pulled to a containerized environment.
 
-What this post will not cover is how to update a complete platform(including configurations etc.) with WSO2 Updates. This post will simply cover what’s the best strategy to pull WSO2 updated base images to your environment. Also this post will not cover the standard Update process in a non-container environment. If you want to learn about this you can refer [this](https://updates.docs.wso2.com/en/latest/updates/overview/).
+What this post will not cover is how to update a complete platform(including configurations etc.) with WSO2 Updates. This post will simply cover what’s the best strategy to pull WSO2 updated base images to your environment. Also, this post will not cover the standard Update process in a non-container environment. If you want to learn about this you can refer [this](https://updates.docs.wso2.com/en/latest/updates/overview/).
 
 **Also, although I will be referring WSO2 MI in most examples this post is applicable to all WSO2 Products.**
 
@@ -37,17 +37,17 @@ In a nutshell “To Avoid System Failures and Vulnerabilities". Continuous maint
 
 #### How would Updates Affect your Integrations.
 
-When it comes to updates the updates can be provided to different components of the product. If you are familiar with WSO2 Micro Integrator, updates can be introduced to specific mediators, the transports layers etc. So depending on which component the updates are introduced this will directly impact your integration usecases. Hence it’s important to understand what kind of updates went in and what are the changes the users will have to do in-order to make sure the your integrations are working as expected.
+When it comes to updates the updates can be provided to different components of the product. If you are familiar with WSO2 Micro Integrator, updates can be introduced to specific mediators, the transports layers etc. So depending on which component the updates are introduced this will directly impact your integration use cases. Hence it’s important to understand what kind of updates went in and what are the changes the users will have to do in-order to make sure the your integrations are working as expected.
 
 #### WSO2 Update Versioning.
 
 Inorder to come up with a proper update strategy we need to understand how WSO2 updates are versioned. When it comes to maintaining updates It’s crucial to properly version the images inorder to identify the correct update levels and the changes that are incorporated in that particular update.
 
-Initially when the product does a GA release, the base version of the image will be versioned as 1.2.0.0.(This is WSO2 MI version) Then consecutive updates will be bumping the last digit of the versioning string. Versioning will follow a standard like below.
+Initially when the product does a GA release, the base version of the image will be versioned as 1.2.0.0.(This is WSO2 MI version) Then consecutive updates will be bumping the last digit of the versioning string. Versioning will follow a standard like the below.
 
 **_1.2.0.0 \[GA\] — -> 1.2.0.1 \[Update\] — -> 1.2.0.2 \[Update\]_**
 
-As shown above, the last digit of the version number increments as updates are released. This number can be used to determine the update level and the changes that went into the specific update level. Since we are using docker images to pull the updates, the docker image will carry a slightly different versioning format as shown below. The versioning will carry the base OS type as well. The following example shows the alpine based based image.
+As shown above, the last digit of the version number increments as updates are released. This number can be used to determine the update level and the changes that went into the specific update level. Since we are using docker images to pull the updates, the docker image will carry a slightly different versioning format as shown below. The versioning will carry the base OS type as well. The following example shows the alpine based image.
 
 **_1.2.0.0-alpine \[Latest\]< — -> 1.2.0.1-alpine \[Update\] — --> 1.2.0.2-alpine \[Update\]_**
 
@@ -71,7 +71,7 @@ Maintaining the actual WSO2 update level internally will help the users to learn
 
 Inorder to check the update details you can visit WSO2 updates Portal. [https://updates-info.wso2.com/](https://updates-info.wso2.com/)
 
-Following is the stadard update view and WSO2 is crrently working on a generic view that can be used for docker updated images. I’ll update the post once this is rolledout to production.
+Following is the standard update view and WSO2 is currently working on a generic view that can be used for docker updated images. I’ll update the post once this is rolled out to production.
 
 ![](/assets/img/medium/1__hMqWrYtwOVcw__k64OsdLsw.png)
 
