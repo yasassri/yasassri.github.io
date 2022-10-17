@@ -1,6 +1,6 @@
 ---
-title: Converting Java CLI Client to a Native Executable with GrallVM
-description: Converting Java CLI Client to a Native Executable with GrallVM
+title: Converting Java CLI Client to a Native Executable with GraalVM
+description: Converting Java CLI Client to a Native Executable with GraalVM
 date: '2022-10-16'
 categories: [Programming]
 keywords: [GraalVM, wso2, native-image, executable]
