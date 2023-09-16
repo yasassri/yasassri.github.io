@@ -84,7 +84,7 @@ const result = await pool.query(getDigestQuery)
 ```
 Note when reading the digest we have to decompress it and convert it to a String so we can pass it back to a JSON. Once that is done we can use the following code the recontruct the digest back. For that we can use digest.push_centroid() method as in [here](https://github.com/welch/tdigest/blob/cf73bdd0544c4b0b5e9b34a423e888c3c5b26413/tdigest.js#L93). 
 
-```java
+```javascript
 result.recordset.forEach(element => {
         let newDigest = new TDigest();
         newDigest.push_centroid(JSON.parse(element.digest));
@@ -179,6 +179,6 @@ if (require.main === module) {
     main();
 }
 ``` 
-You can find the code at [Github](https://github.com/yasassri/tdigest-persist-sample) as well.
+You can find full code at [Github](https://github.com/yasassri/tdigest-persist-sample) as well. 
 
 Hope the above helps someone. Please drop a comment if you have any questions. 
