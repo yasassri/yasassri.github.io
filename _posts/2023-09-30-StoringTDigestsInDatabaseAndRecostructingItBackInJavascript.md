@@ -18,7 +18,7 @@ Before we go into the solution it's important to undertand about Centroids in TD
 
 The main problem with the TDigest object that we create is, it's not serializable, there isn't a inboult mechanism in the TDigest implementation(Jaascript version) to serialize the data out of the box. So as a workaround we will be extracting all the Centroids and then storing it in the DB which will allow us to reconstruct the Digest from the DB.
 
-Ok let's go to the solution. 
+Ok let's go to the solution.
 
 ### Prerequisites.
 
