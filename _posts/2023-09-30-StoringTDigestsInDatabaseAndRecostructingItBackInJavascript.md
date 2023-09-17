@@ -22,7 +22,7 @@ Okay, let's go to the solution.
 
 ### Prerequisites.
 
-For this example, I'll be using SQLServer and NodeJS. So these are the only dependencies. Then of course we need the TDigest npm module for this. Assuming you have `node` setup you can simply use `npm` to install the dependencies.
+For this example, I'll be using SQLServer and NodeJS. So these are the only dependencies. Then of course we need the TDigest [npm module](https://github.com/welch/tdigest) for this. Assuming you have `node` setup you can simply use `npm` to install the dependencies.
 
 ```sh
 npm install tdigest mssql
