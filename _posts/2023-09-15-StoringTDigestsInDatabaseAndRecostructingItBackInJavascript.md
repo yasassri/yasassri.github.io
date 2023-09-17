@@ -1,7 +1,7 @@
 ---
 title: Storing TDigests In A Database And Reconstructing It Back In Javascript
 description: Storing TDigests In A Database And Reconstructing It Back In Javascript
-date: '2023-09-30'
+date: '2023-09-15'
 categories: [Programming]
 keywords: [TDigest, Node, Algorithms, SQLServer]
 tags: [TDigest, Node, Javascript, Algorithms, SQLServer]
