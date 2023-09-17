@@ -1,7 +1,7 @@
 ---
 title: Storing TDigests In A Database And Reconstructing It Back In Javascript
 description: Storing TDigests In A Database And Reconstructing It Back In Javascript
-date: '2023-09-30'
+date: '2023-09-15'
 categories: [Programming]
 keywords: [TDigest, Node, Algorithms, SQLServer]
 tags: [TDigest, Node, Javascript, Algorithms, SQLServer]
@@ -22,7 +22,7 @@ Okay, let's go to the solution.
 
 ### Prerequisites.
 
-For this example, I'll be using SQLServer and NodeJS. So these are the only dependencies. Then of course we need the TDigest npm module for this. Assuming you have `node` setup you can simply use `npm` to install the dependencies.
+For this example, I'll be using SQLServer and NodeJS. So these are the only dependencies. Then of course we need the TDigest [npm module](https://github.com/welch/tdigest) for this. Assuming you have `node` setup you can simply use `npm` to install the dependencies.
 
 ```sh
 npm install tdigest mssql
