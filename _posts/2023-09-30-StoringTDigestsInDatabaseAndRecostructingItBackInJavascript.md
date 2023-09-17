@@ -1,10 +1,10 @@
 ---
-title: Storing TDigests In A Database And Recostructing It Back In Javascript
-description: Converting Java CLI Client to a Native Executable with GraalVM
+title: Storing TDigests In A Database And Reconstructing It Back In Javascript
+description: Storing TDigests In A Database And Reconstructing It Back In Javascript
 date: '2023-09-30'
 categories: [Programming]
 keywords: [TDigest, Node, Algorithms, SQLServer]
-tags: [TDigest, Node, Algorithms, SQLServer]
+tags: [TDigest, Node, Javascript, Algorithms, SQLServer]
 image:
   path: /assets/img/posts/percentiles.jpg
   width: 800
@@ -12,23 +12,23 @@ image:
   alt:
 ---
 
-[T-Digest](https://www.sciencedirect.com/science/article/pii/S2665963820300403) is a statistical algorithm used for approximate calculation of quantiles and percentiles from large data sets. It's particularly useful when you have a vast amount of data and you want to quickly estimate values like the median, quartiles, or any other percentile without having to process the entire dataset. In some cases you may want have to persist the TDigest data so you can use that data in the future. 
+[T-Digest](https://www.sciencedirect.com/science/article/pii/S2665963820300403) is a statistical algorithm used for approximate calculation of quantiles and percentiles from large data sets. It's particularly useful when you have a vast amount of data and you want to quickly estimate values like the median, quartiles, or any other percentile without having to process the entire dataset. Once the large dataset is processed the data will be added to the TDigest and from the Digest we are able to estimate the quantiles. In some cases, you may want to persist the TDigest so you can use that data at a different point. In this post, we will explore how we can persist the tidest we create with Nodejs in SQLServer and then reconstruct it back.
 
-Before we go into the solution it's important to undertand about Centroids in TDigest. In essence, centroids in T-Digest serve as central values or representatives of quantile ranges within the data distribution. We will be using these Centroids when storing the Digest in the DB.
+Before we go into the solution it's important to understand about Centroids in TDigest. In essence, centroids in T-Digest serve as central values or representatives of quantile ranges within the data distribution. We will be using these Centroids when storing the Digest in the DB.
 
-The main problem with the TDigest object that we create is, it's not serializable, there isn't a inboult mechanism in the TDigest implementation(Jaascript version) to serialize the data out of the box. So as a workaround we will be extracting all the Centroids and then storing it in the DB which will allow us to reconstruct the Digest from the DB.
+Once we create the Digest in Javascript, the main problem with the TDigest object that we create is, that it's not serializable, there isn't an inbuilt mechanism in the TDigest implementation(Javascript version) to serialize the data out of the box. So as a workaround, we will be extracting all the Centroids from the digest and then storing it in the DB which will allow us to reconstruct the Digest from the DB.
 
-Ok let's go to the solution.
+Okay, let's go to the solution.
 
 ### Prerequisites.
 
-For this example I'll be using SQLServer and NodeJS. So these are the only dependencies. Then ofcouse we need to TDigest npm module for this. Assuming you have node setup you can simple use `npm` to install the dependencies.
+For this example, I'll be using SQLServer and NodeJS. So these are the only dependencies. Then of course we need to TDigest npm module for this. Assuming you have `node` setup you can simply use `npm` to install the dependencies.
 
 ```sh
 npm install tdigest mssql
 ```
 
-Then let's create simple Database and the table. For this I'm using the SQLServer Docker image so I can quciky setup a DB locally to do testing etc. 0
+Then let's create a simple Database and table. For this, I'm using the SQLServer Docker image so I can quickly setup a DB locally to do testing etc.
 
 Let's start the docker image.
 ```sh
