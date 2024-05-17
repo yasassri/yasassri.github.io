@@ -187,9 +187,10 @@ Caused by: org.wso2.carbon.membership.scheme.kubernetes.exceptions.KubernetesMem
         ... 80 more
 ```
 
-Let's closely look at the Exception, it's thrown from the clustering component of WSO2. When you want tasks to cordinate in WSO2 application you can enable clustering in WSO2, for clustering to work WSO2 should be able to discover the code, WSO2 clustering uses 
+The thought process, it was working fine for 3 years and suddenly it's broken, so obviously the Ops team did some changes to the K8S cluter :) After checking with them, it tured out they haven't done any changes recently. So we have to find what's going on. Let's  look at the Exception closely, it's thrown from the clustering component of WSO2. When you want tasks to be cordinated cordinate in a multinode WSO2 application setup you can enable clustering in WSO2, for clustering to work WSO2 should be able to discover the application nodes, and should be able to talk toeach other. WSO2 clustering uses Hazlecast underneath with a custom membership schema (This is where you tell Hazlecast how to discover other members of the cluster). 
 
-Okay, let's go to the solution.
+So let's put the developper hat on; As per the stack trace the exception is thrown from `org.wso2.carbon.membership.scheme.kubernetes.KubernetesMembershipScheme` Class. Since WSO2 is an Opensource product we can look into the code and see what exactly is happening. 
+
 
 ### Prerequisites.
 
