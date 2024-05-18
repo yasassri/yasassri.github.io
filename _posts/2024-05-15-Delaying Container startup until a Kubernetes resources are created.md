@@ -1,5 +1,5 @@
 ---
-title: Delaying application startup until Kubernetes resources are created
+title: Delaying Application Startup Until Kubernetes Resources are Created
 description: Delaying application startup until Kubernetes resources are created
 date: '2024-05-15'
 categories: [Kubernetes, WSO2]
