@@ -189,8 +189,32 @@ Caused by: org.wso2.carbon.membership.scheme.kubernetes.exceptions.KubernetesMem
 
 The thought process, it was working fine for 3 years and suddenly it's broken, so obviously the Ops team did some changes to the K8S cluter :) After checking with them, it tured out they haven't done any changes recently. So we have to find what's going on. Let's  look at the Exception closely, it's thrown from the clustering component of WSO2. When you want tasks to be cordinated cordinate in a multinode WSO2 application setup you can enable clustering in WSO2, for clustering to work WSO2 should be able to discover the application nodes, and should be able to talk toeach other. WSO2 clustering uses Hazlecast underneath with a custom membership schema (This is where you tell Hazlecast how to discover other members of the cluster). 
 
-So let's put the developper hat on; As per the stack trace the exception is thrown from `org.wso2.carbon.membership.scheme.kubernetes.KubernetesMembershipScheme` Class. Since WSO2 is an Opensource product we can look into the code and see what exactly is happening. 
+So let's put the developper hat on; As per the stack trace the exception is thrown from `org.wso2.carbon.membership.scheme.kubernetes.KubernetesMembershipScheme` Class. Since WSO2 is an Opensource product we can look into the code and see what exactly is happening. I won't go ino details but basically WSO2 is calling K8S APIs to retrieve member details. If anyone is interested here is where the exception is thrown. https://github.com/wso2/kubernetes-common/blob/v1.0.4/kubernetes-membership-scheme/src/main/java/org/wso2/carbon/membership/scheme/kubernetes/KubernetesMembershipScheme.java#L97
+
+Let's see how clustering works in WSO2, so we can better undestand the issue. Basically a pod is exposed via a K8S service, when a service is created K8S will create endpoints to respresent each pod which are grouped based on the selectors. So inorder to identify the members and their IPs WSO2 calls the Endpoints API in K8s. (https://kubernetes.io/docs/reference/kubernetes-api/service-resources/endpoints-v1/#http-request) which returns list of Endpoints registered and their states. The response will be something like below.
+
+```
+ Name: "mysvc",
+ Subsets: [
+   {
+     Addresses: [{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}],
+     Ports: [{"name": "a", "port": 8675}, {"name": "b", "port": 309}]
+   },
+   {
+     Addresses: [{"ip": "10.10.3.3"}],
+     Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
+   },
+]
+```
+
+From the above response WSO2 will get all the endpoint IPs and register as a cluster member. Now what is happening is for some reason endpoints are not returned by the API call. 
+
+Long story short after debugging following is what was happening. For K8S to register endpoins the Pod should be in the `Running` state, for that to happen all the containers within the pod should be successfully pulled and started. Now what was happening is we had a Fluetbit Side Car container associated with the main container for logging. For some reason the Fluenbit image was taking more time than the main container to be pulled. So main container get's pulled and starts but the side car takes more time to get pulled hence when the WSO2 calls the K8S API to get the Endpoints they are not yet registered as the Pod is not in the Running state. Later on we learned that there was a new corporate proxy added which caused the slowness in the image pull proces. 
+
+Ideally WSO2 should have added some logic to retry if the endpoints were not registered but they haven't so we decided to implement a workaround for the issue. Now let's get to the solution, the title of the blog :)
 
 
-### Prerequisites.
+### Delaying application startup.
+
+
 
