@@ -13,7 +13,8 @@ image:
 ---
 In this post, I will take you through the process I followed when trying to debug an issue that was occurring in one of the applications deployed in K8S. If you are just interested in the part mentioned in the title, skip to the second part of the blog.
 
-Finding what to fix
+# Finding what to fix
+
 This was a unique problem I had to work on recently. It all started when WSO2 Enterprise Integrator, which is an ESB, started throwing the following exception. This application had been running for years without an issue, and suddenly the exception occurred. Weird!
 
 ```
