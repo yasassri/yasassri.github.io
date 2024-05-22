@@ -1,0 +1,88 @@
+<p>In this post, I’ll explain how you can build a Github workflow to move your APIs across environments with WSO2 API Manager. Let’s look at the API movement flow.</p>
+
+<p>I have worked with Github Actions in some projects and used quite a few Actions written by others. So I wanted to write my own custom action to experience the process. So here I’m with this post after building a custom GitHUb Action to setup WSO2 APICTL. This post will not explain how to build a custom action but rather how to use the custom action that was built. The custom Action is located in the Guthub Market place at <a href="https://github.com/marketplace/actions/setup-wso2-apictl">https://github.com/marketplace/actions/setup-wso2-apictl</a></p>
+
+<h3 id="what-is-wso2-api-ctl">What is WSO2 API CTL</h3>
+
+<p>WSO2 API Controller (apictl) is a command-line tool providing the capability to move APIs, API Products, and Applications across environments and to perform CI/CD operations. Furthermore, it can perform WSO2 Micro Integrator (WSO2 MI) server specific operations such as monitoring Synapse artifacts and performing MI management/administrative tasks from the command line.</p>
+
+<h3 id="why-the-custom-action">Why the Custom Action</h3>
+
+<p>If you are working on Github and using Github workflows to manage your deployments and to develop CICD pipelines, for any CICD pipeline related WSO2 APIM or MI this action can be used. This custom GH action will basically setup WSO2 APICTL in a Linux environment which can be used to perform different operations like, moving APIs between environments etc. Since there are no usecases for setting up on Windows environments, currently only Linux environments are supported.</p>
+
+<h3 id="how-to-use-the-action">How to use the Action</h3>
+
+<p>Basically in your workflow you can use the action by adding the following step. (Make sure you get the latest version from Github)</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="na">uses</span><span class="pi">:</span> <span class="s">yasassri/setup-wso2-apictl@v1.2</span>
+<span class="na">with</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">4.1.0'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You are setup to any version of the APICTL by passing the version parameter. Or If you wish to install APICTL by providing a URL to a tarball location, that will also work. Following are the parameters you can pass as inputs.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">version</code></strong></p>
+
+<p>[Optional] The version of the APICTL to setup. The default vale is <code class="language-plaintext highlighter-rouge">"4.1.0"</code></p>
+
+<p>The version will be picked from the Github releases at https://github.com/wso2/product-apim-tooling/releases. 
+Ex: 4.1.0, v4.1.0, 3.2.5 etc.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">tarball_location</code></strong></p>
+
+<p>[Optional] A location to an APICTL Tarball if it needs to be downloaded from a custom location. No Default</p>
+
+<h3 id="examples-of-different-inputs">Examples of different inputs</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="na">uses</span><span class="pi">:</span> <span class="s">yasassri/setup-wso2-apictl@v1.2</span>
+<span class="na">with</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">4.1.0'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="na">uses</span><span class="pi">:</span> <span class="s">yasassri/setup-wso2-apictl@v1.2</span>
+<span class="na">with</span><span class="pi">:</span>
+  <span class="na">tarball_location</span><span class="pi">:</span> <span class="s1">'</span><span class="s">https://github.com/wso2/product-apim-tooling/releases/download/v4.1.0/apictl-4.1.0-linux-x64.tar.gz'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="full-workflow">Full workflow</h3>
+
+<p>Following is a full workflow with the custom action.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="na">name</span><span class="pi">:</span> <span class="s">WSO2_APIM</span>
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">wso2</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">permissions</span><span class="pi">:</span>
+      <span class="na">issues</span><span class="pi">:</span> <span class="s">write</span>
+      <span class="na">pull-requests</span><span class="pi">:</span> <span class="s">write</span>
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">yasassri/setup-wso2-apictl@v1.2</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">v3.2.5'</span>
+    <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">apictl version</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
