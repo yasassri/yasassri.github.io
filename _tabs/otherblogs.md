@@ -4,7 +4,7 @@ icon: fas fa-info-circle
 order: 1
 ---
 
-Following are my old blogs which are not avtively maintained anymore.
+The following are my old blogs, which are no longer actively maintained.
 
 - [https://ycrnet.medium.com](https://ycrnet.medium.com)
 - [https://yasassriratnayake.blogspot.com](https://yasassriratnayake.blogspot.com)
