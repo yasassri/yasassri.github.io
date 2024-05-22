@@ -1,7 +1,7 @@
 ---
 title: Other Blogs
 icon: fas fa-info-circle
-order: 2
+order: 1
 ---
 
 Following are my old blogs which are not avtively maintained anymore.
