@@ -6,7 +6,7 @@ categories: [Kubernetes, Datadog, Java]
 keywords: [Kubernetes, WSO2, Clustering, Datadog, Java, JavaTools]
 tags: [Kubernetes, WSO2, Datadog, Java]
 image:
-  path: /assets/img/posts/kb_dd.jpeg
+  path: /assets/img/posts/kb_dd.png
   width: 800
   height: 400
   alt: ''
