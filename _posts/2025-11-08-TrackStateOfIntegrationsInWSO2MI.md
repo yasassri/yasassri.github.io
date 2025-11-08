@@ -101,7 +101,7 @@ The mediator exposes the following properties for use in your workflow:
 
 ## Real-World Example
 
-Here's a practical scenario: processing customer orders with duplicate prevention.
+### Example 1: Processing customer orders with duplicate prevention.
 
 ```xml
 <api name="OrderProcessingAPI" context="/orders">
@@ -139,6 +139,138 @@ Here's a practical scenario: processing customer orders with duplicate preventio
       <respond/>
     </inSequence>
   </resource>
+</api>
+```
+### Example 2: Bulk Processing and checking status
+
+In this scenario, we will be processing a bulk load in the background and 
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/bulk" name="ProcessRecordAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/process">
+        <inSequence>
+            <propertyGroup>
+                <property name="STATE_TRACKER_OPERATION" value="IS_PROCESS_RUNNING"/>
+                <property name="PROCESS_IDENTIFIER" value="BuldProcessID12345"/>
+            </propertyGroup>
+            <class name="org.nmdp.integration.mediator.statetracker.StateTrackerMediator"/>
+            <filter regex="false" source="boolean($ctx:PROCESS_IS_RUNNING)">
+                <then>
+                    <propertyGroup>
+                        <property name="INTG_NAME" scope="default" type="STRING" value="BulkBusinessPartyTPPAPI"/>
+                        <property expression="get-property('MessageID')" name="uuid" scope="default" type="STRING"/>
+                        <property value="Bulk records been triggered" name="Message" scope="default" type="STRING"/>
+                    </propertyGroup>
+                    <!-- Accept the bulk request and run in the background -->
+                    <clone continueParent="false" id="CloneTpp">
+                        <target>
+                            <sequence>
+                                <payloadFactory media-type="json">
+                                    <format>
+                                        {
+                                        "Message": {
+                                        "ReturnStatus": "Processing",
+                                        "ReturnMessage": "Bulk request is accepted for processing, you can track the logs using TraceID.",
+                                        "TraceID": "$1"
+                                        }
+                                        }
+                                    </format>
+                                    <args>
+                                        <arg evaluator="xml" expression="$ctx:uuid"/>
+                                    </args>
+                                </payloadFactory>
+                                <property name="HTTP_SC" value="202" scope="axis2"/>
+                                <respond description="respondToClient"/>
+                            </sequence>
+                        </target>
+                        <target>
+                            <sequence>
+                                <sequence key="ProcessYourRecords"/>
+                            </sequence>
+                        </target>
+                    </clone>
+                </then>
+                <else>
+                    <payloadFactory media-type="json">
+                        <format>
+                            {
+                            "Message": {
+                            "ReturnStatus": "Processing",
+                            "ReturnMessage": "Bulk request is still in progress. Please try after sometime."
+                            }
+                            }
+                        </format>
+                        <args></args>
+                    </payloadFactory>
+                    <property name="HTTP_SC" value="409" scope="axis2"/>
+                    <respond description="respondToClient"/>
+                </else>
+            </filter>
+       </inSequence>
+       <outSequence>
+       </outSequence>
+       <faultSequence>
+                <property name="PROCESS_IDENTIFIER" value="BuldProcessID12345"/>
+                <property name="STATE_TRACKER_OPERATION" value="STOP_PROCESS"/>
+                <class name="org.nmdp.integration.mediator.statetracker.StateTrackerMediator"/>
+                <payloadFactory media-type="json">
+                    <format>
+                        {
+                        "ReturnMessage": "Error"
+                        }
+                    </format>
+                    <args/>
+                </payloadFactory>
+                <property name="HTTP_SC" value="400" scope="axis2"/>
+                <respond description="respondToClient"/>
+        </faultSequence>
+    </resource>
+    <!-- Resource to monitor status -->
+    <resource methods="GET" uri-template="/process_bulk_status">
+        <inSequence>
+            <propertyGroup>
+                <property name="STATE_TRACKER_OPERATION" value="IS_PROCESS_RUNNING"/>
+                <property name="PROCESS_IDENTIFIER" value="BuldProcessID12345"/>
+            </propertyGroup>
+            <class name="org.nmdp.integration.mediator.statetracker.StateTrackerMediator"/>
+            <filter regex="false" source="boolean($ctx:PROCESS_IS_RUNNING)">
+                <then>
+                    <payloadFactory media-type="json">
+                        <format>
+                            {
+                                "Message": {
+                                    "ReturnStatus": "No Process running",
+                                    "ReturnMessage": "There are no active jobs running currently."
+                                    "IsRunning": "false"
+                                }
+                            }
+                        </format>
+                        <args></args>
+                    </payloadFactory>
+                    <property name="HTTP_SC" value="200" scope="axis2"/>
+                </then>
+                <else>
+                    <payloadFactory media-type="json">
+                        <format>
+                            {
+                                "Message": {
+                                    "ReturnStatus": "Processing",
+                                    "ReturnMessage": "Bulk request is still in progress. Please try after sometime.",
+                                    "IsRunning": "true"
+                                }
+                            }
+                        </format>
+                        <args></args>
+                    </payloadFactory>
+                    <property name="HTTP_SC" value="409" scope="axis2"/>
+                </else>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
 </api>
 ```
 
