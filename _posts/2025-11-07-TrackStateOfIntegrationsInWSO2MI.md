@@ -1,6 +1,6 @@
 ---
-title: Building a Thread-Safe State Tracker Mediator for WSO2: Track State Of Integrations In WSO2 MI
-description: Building a Thread-Safe State Tracker Mediator for WSO2: Track State Of Itegrations In WSO2MI
+title: Building a Thread-Safe State Tracker Mediator for WSO2
+description: Building a Thread-Safe State Tracker Mediator for WSO2
 date: '2025-11-07'
 categories: [WSO2, WSO2 MI]
 keywords: [WSO2, WSO2MI, Java]
