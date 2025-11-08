@@ -1,7 +1,7 @@
 ---
 title: Building a Thread-Safe State Tracker Mediator for WSO2: Track State Of Integrations In WSO2 MI
 description: Building a Thread-Safe State Tracker Mediator for WSO2: Track State Of Itegrations In WSO2MI
-date: '2025-11-08'
+date: '2025-11-07'
 categories: [WSO2, WSO2 MI]
 keywords: [WSO2, WSO2MI, Java]
 tags: [WSO2, WSO2MI, Java]
@@ -240,7 +240,7 @@ In this scenario, we will be processing a bulk load in the background and
                             {
                                 "Message": {
                                     "ReturnStatus": "No Process running",
-                                    "ReturnMessage": "There are no active jobs running currently."
+                                    "ReturnMessage": "There are no active jobs running currently.",
                                     "IsRunning": "false"
                                 }
                             }
