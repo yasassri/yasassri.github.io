@@ -11,7 +11,6 @@ image:
   height: 400
   alt: ''
 ---
-# Solving Datadog Java Agent Conflicts in Kubernetes With A Simple C Library
 
 Recently, I ran into an issue where Datadog's admission controller was automatically injecting `JAVA_TOOL_OPTIONS` into our Java app containers, causing startup issues. This Java app container was executing some other Java commands before the actual app, and the injected `JAVA_TOOL_OPTIONS` was causing issues for these other Java runs. In this post, I'll walk you through how I solved this with a lightweight shared library approach.
 

@@ -11,7 +11,6 @@ image:
   height: 400
   alt: ''
 ---
-# Building a Thread-Safe State Tracker Mediator for WSO2: Track State Of Integrations In WSO2 MI
 
 One of the challenges when building integration workflows with WSO2 is handling long-running processes that need to prevent parallel executions. Imagine a scenario where you're processing an order that involves multiple steps: inventory check, payment processing, shipment coordination, and delivery confirmation. You don't want another request to start processing the same order while the first one is still in progress. There are complex designs you can do to solve this problem, but WSO2 doesn not provide a solution OOB for this.
 
@@ -142,7 +141,7 @@ The mediator exposes the following properties for use in your workflow:
 ```
 ### Example 2: Bulk Processing and checking status
 
-In this scenario, we will be processing a bulk load in the background and 
+In this scenario, we will be processing a bulk load in the background and checking its status.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
