@@ -11,8 +11,7 @@ image:
   height: 400
   alt: ''
 ---
-
-## Introduction
+# Building a Thread-Safe State Tracker Mediator for WSO2: Track State Of Integrations In WSO2 MI
 
 One of the challenges when building integration workflows with WSO2 is handling long-running processes that need to prevent parallel executions. Imagine a scenario where you're processing an order that involves multiple steps: inventory check, payment processing, shipment coordination, and delivery confirmation. You don't want another request to start processing the same order while the first one is still in progress. There are complex designs you can do to solve this problem, but WSO2 doesn not provide a solution OOB for this.
 
@@ -319,7 +318,6 @@ mvn clean install
 Currently, the mediator:
 - Uses in-memory storage (suitable for single instances) but this can be easily extended to use a datastore. 
 
-
 ## Conclusion
 
 The WSO2 State Tracker Mediator is a lightweight yet effective solution for managing long-running processes and preventing duplicate executions in your integration workflows. By providing a simple API for state management, it helps you build more robust, predictable, and maintainable integration solutions.
@@ -327,3 +325,8 @@ The WSO2 State Tracker Mediator is a lightweight yet effective solution for mana
 Whether you're handling order processing, invoice reconciliation, or any other long-running business process, this mediator gives you the control and visibility you need to ensure reliable execution.
 
 Have you faced challenges with duplicate processing or long-running workflows? Try the State Tracker Mediator and share your experience in the comments below!
+
+**Repository**: [yasassri/wso2-state-tracker-midiator](https://github.com/yasassri/wso2-state-tracker-midiator)  
+**License**: Apache License 2.0  
+
+---
